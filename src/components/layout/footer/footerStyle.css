@@ -1,0 +1,25 @@
+footer {
+    background-color: #212529; 
+    padding: 1rem 0;
+  }
+  
+  footer h5 {
+    margin-bottom: 1rem;
+  }
+  
+  footer p {
+    margin-bottom: 0.5rem;
+  }
+  
+  footer .nav-link {
+    color: #adb5bd;
+    transition: color 0.3s;
+  }
+  
+  footer .nav-link:hover {
+    color: #ffffff;
+  }
+  
+  footer hr {
+    border-top: 1px solid #495057;
+  }
