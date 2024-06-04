@@ -1,0 +1,148 @@
+.login {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: fit-content;
+}
+
+.contenedor-login {
+  margin: 2rem 0;
+  box-shadow: 0px 5px 15px 5px #212529;
+}
+
+.contenedor-login .register {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.titulo-login {
+  margin: 3rem 0 4rem 0;
+  color: #8198aa;
+  text-align: center;
+}
+
+.contenedor-img {
+  width: 100%;
+  height: 100%;
+  background-color: #212529;
+}
+
+
+.contenedor-img img {
+  width: 100%;
+  height: 650px;
+  object-fit: cover;
+  border-top-right-radius: 70px;
+  border-bottom-right-radius: 70px;
+}
+
+.contenedor-img .register-img {
+  height: 100%;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-top-left-radius: 70px;
+  border-bottom-left-radius: 70px;
+}
+
+.col-form {
+  height: 650px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #212529;
+}
+
+.col-form-register {
+  min-height: 900px;
+  height: fit-content;
+}
+
+.contenedor-form{
+  width: 100%;
+  height: 650px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.contenedor-form-register {
+  height: 100%;
+}
+
+.contenedor-form h2 {
+  margin-bottom: 30px;
+}
+
+.contenedor-form h4 {
+  font-size: 1.25rem;
+}
+
+.contenedor-form h2, 
+.contenedor-form h4 {
+  color: white;
+  text-align: center;
+}
+
+.form {
+  width: 80%;
+  color: white;
+}
+
+.boton-login {
+  width: 100%;
+  background-color: #4c6579 !important;
+  border: none !important;
+}
+
+.texto-registro {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.link-registro {
+  color: #8198aa;
+}
+
+@media (max-width: 575.98px) {
+
+  .contenedor-login {
+    margin: 0 0 2rem 0;
+  }
+
+  .contenedor-img img {
+    height: 400px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+  }
+
+  .contenedor-img .register-img {
+    height: 400px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+  }
+
+  .col-form {
+    height: 575px;
+    justify-content: flex-start;
+  }
+
+  .contenedor-form {
+    height: 500px;
+  }
+
+  .col-form-register {
+    min-height: 900px;
+    height: fit-content;
+  }
+
+  .contenedor-form-register {
+    height: 100%;
+    margin-top: 50px;
+  }
+}

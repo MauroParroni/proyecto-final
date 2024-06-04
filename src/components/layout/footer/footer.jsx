@@ -7,9 +7,9 @@ import "./footerStyle.css";
 
 function Footer() {
   return (
-    <footer className="bg-dark text-white mt-5 p-4">
-      <Container>
-        <Row>
+    <footer className="bg-dark text-white">
+      <Container fluid>
+        <Row className="px-3">
           <Col md={4}>
             <h5>About Us</h5>
             <p>
@@ -41,9 +41,7 @@ function Footer() {
         <hr className="bg-light" />
         <Row>
           <Col className="text-center">
-            <p className="mb-0">
-              &copy; 2024 BeppoPelis. All Rights Reserved.
-            </p>
+            <p className="mb-0">&copy; 2024 BeppoPelis. All Rights Reserved.</p>
           </Col>
         </Row>
       </Container>

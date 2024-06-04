@@ -1,3 +1,23 @@
 nav.navbar-transparent {
-    background-color: rgba(0, 0, 0, 0.8) !important;
+  background-color: #212529 !important;
+}
+
+.dropdown {
+  margin-left: .5rem;
+}
+
+.dropdown-menu-end[data-bs-popper] {
+  right: 0;
+}
+
+@media (max-width: 991.98px) {
+
+  .dropdown {
+    padding-top: 1rem;
+    margin-left: 0;
   }
+
+  .dropdown-menu-end[data-bs-popper] {
+    right: auto !important;
+  }
+}
