@@ -5,7 +5,10 @@ import Col from "react-bootstrap/Col";
 import Nav from "react-bootstrap/Nav";
 import "./footerStyle.css";
 
-function Footer() {
+function Footer({ onFilterChange }) {
+    const handleFilterChange = (filtro) => {
+    onFilterChange(filtro); // Llama a la función de filtro proporcionada por el componente padre
+  };
   return (
     <footer className="bg-dark text-white mt-5 p-4">
       <Container>
@@ -24,12 +27,12 @@ function Footer() {
               <Nav.Link href="#home" className="text-white">
                 Inicio
               </Nav.Link>
-              <Nav.Link href="#link" className="text-white">
+              <Nav.Link className="text-white" onClick={() => handleFilterChange('Películas')}>
                 Peliculas
-              </Nav.Link>
-              <Nav.Link href="#link" className="text-white">
+                </Nav.Link>
+              <Nav.Link className="text-white" onClick={() => handleFilterChange('Series')}>
                 Series
-              </Nav.Link>
+                </Nav.Link>
             </Nav>
           </Col>
           <Col md={4}>

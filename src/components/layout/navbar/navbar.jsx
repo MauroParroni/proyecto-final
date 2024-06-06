@@ -8,7 +8,10 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import logo from '../../../Images/5c5ce433-8a48-4301-91b9-d7f29644ead5.png';
 import './navbarStyle.css';
 
-function BarraNav() {
+function BarraNav({ onFilterChange }) {
+  const handleFilterChange = (filtro) => {
+    onFilterChange(filtro); // Llama a la función de filtro proporcionada por el componente padre
+  };
   return (
     <Navbar bg="dark" data-bs-theme="dark" expand="lg" className="navbar-transparent sticky-top px-3">
       <Navbar.Brand href="#home">
@@ -24,8 +27,8 @@ function BarraNav() {
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="me-auto">
           <Nav.Link href="#home">Inicio</Nav.Link>
-          <Nav.Link href="#link">Peliculas</Nav.Link>
-          <Nav.Link href="#link">Series</Nav.Link>
+          <Nav.Link onClick={() => handleFilterChange('Películas')}>Peliculas</Nav.Link>
+          <Nav.Link onClick={() => handleFilterChange('Series')}>Series</Nav.Link>
         </Nav>
         <Form className="d-flex ms-auto">
           <FormControl
