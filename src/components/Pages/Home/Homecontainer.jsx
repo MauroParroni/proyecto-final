@@ -2,10 +2,14 @@ import React from "react";
 import BarraNav from "../../layout/navbar/navbar";
 import Footer from "../../layout/footer/footer";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import { Carousel } from "react-bootstrap";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import './homecontainer.css';
 
 
 function Home() {
-  // Array de objetos con información de películas
   const peliculas = [
     {
       id: 1,
@@ -56,28 +60,124 @@ function Home() {
       imagen: "https://m.media-amazon.com/images/I/51v5ZpFyaFL._AC_SY445_.jpg",
     }
   ];
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 1000,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+          infinite: true,
+          dots: true
+        }
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+          initialSlide: 2
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1
+        }
+      }
+    ]
+  };
 
   return (
     <>
       <BarraNav />
-      <Container>
-        <h1 className="my-4">Especialistas en el contenido - lo mejor y destacado:</h1>
-        <Row>
+      <body className="backround-container">
+        <h1 className="tittle">Especialistas en el contenido</h1>
+        <Container>
+          <Row>
+            {peliculas.map((pelicula) => (
+              <Col md={3} key={pelicula.id}>
+                <Card>
+                  <Card.Img variant="top" src={pelicula.imagen} />
+                  <Card.Body>
+                    <Card.Title>{pelicula.titulo}</Card.Title>
+                    <Card.Text>{pelicula.descripcion}</Card.Text>
+                    <Button variant="primary">Ver Detalles</Button>
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))}
+          </Row>
+        </Container>
+        <h1 className="tittle">Nuestra mejor selección</h1>
+        <div className="carousel-container">
+          <Container>
+            <Carousel>
+              <Carousel.Item>
+                <img
+                  className="d-block w-100 carousel-img"
+                  src="https://i.ytimg.com/vi/pfoOH2bKz3Y/maxresdefault.jpg"
+                  alt="First slide"
+                />
+                <Carousel.Caption>
+                  <div className="carousel-text">
+                  <h3>En las profundidades del Sena</h3>
+                  <p>Para salvar París de un baño de sangre, una afligida científica se ve obligada a enfrentarse a su trágico pasado cuando un tiburón gigante aparece en el Sena.</p>
+                  </div>
+                </Carousel.Caption>
+              </Carousel.Item>
+              <Carousel.Item>
+                <img
+                  className="d-block w-100 carousel-img"
+                  src="https://e.rpp-noticias.io/xlarge/2024/05/17/575457_1583517.webp"
+                  alt="Second slide"
+                />
+                <Carousel.Caption>
+                <div className="carousel-text">
+                  <h3>Chabuca</h3>
+                  <p>Chabuca​ es una película biográfica peruana de 2024, producida por la productora Tondero Producciones y dirigida por Jorge Carmona, basada en la vida del presentador y drag queen peruano Ernesto Pimentel.</p>
+                </div>
+                </Carousel.Caption>
+              </Carousel.Item>
+              <Carousel.Item>
+                <img
+                  className="d-block w-100 carousel-img"
+                  src="https://i.ytimg.com/vi/uFR1wbwaORg/mqdefault.jpg"
+                  alt="Third slide"
+                />
+                <Carousel.Caption>
+                <div className="carousel-text">
+                  <h3>Jaque mate</h3>
+                  <p>Un agente secreto retirado se ve forzado a regresar a la acción cuando su sobrina es secuestrada, siendo obligado a robar una fórmula científica como el pago para su liberación.</p>
+                </div>
+                </Carousel.Caption>
+              </Carousel.Item>
+            </Carousel>
+          </Container>
+        </div>
+
+        <div className="slider-container">
+        <h1 className="tittle">Todos los titulos</h1>
+        <Container>
+        <Slider {...settings}>
           {peliculas.map((pelicula) => (
-            <Col md={3} key={pelicula.id} className="mb-4">
-              <Card>
-                <Card.Img variant="top" src={pelicula.imagen} />
-                <Card.Body>
-                  <Card.Title>{pelicula.titulo}</Card.Title>
-                  <Card.Text>{pelicula.descripcion}</Card.Text>
-                  <Button variant="primary">Ver Detalles</Button>
-                </Card.Body>
-              </Card>
-            </Col>
+            <div key={pelicula.id} className="slider-item">
+              <img className="carousel-img" src={pelicula.imagen} alt={pelicula.titulo} />
+            </div>
           ))}
-        </Row>
-      </Container>
+        </Slider>
+        </Container>
+      </div>
       <Footer />
+      </body>
     </>
   );
 }
