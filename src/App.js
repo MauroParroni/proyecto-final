@@ -1,11 +1,12 @@
 import logo from './logo.svg';
 import './App.css';
-import Home from './components/Pages/Home/Homecontainer';
+import MovieDetails from './components/Pages/MovieDetails/Moviedetails';
 
 function App() {
   return (
-    <Home/>
+    <MovieDetails/>
   );
 }
 
 export default App;
+
