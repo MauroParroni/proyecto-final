@@ -84,7 +84,6 @@ const Moviedetails = () => {
   };
   return (
     <>
-      <BarraNav />
       <div>
         <Card className="bg-dark text-white">
           <Row noGutters>
@@ -138,7 +137,6 @@ const Moviedetails = () => {
           </button>
         </div>
       </div>
-      <Footer />
     </>
   );
 };

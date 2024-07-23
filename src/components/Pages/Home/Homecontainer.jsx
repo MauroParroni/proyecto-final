@@ -7,6 +7,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import './homecontainer.css';
+import { Link } from "react-router-dom";
 
 
 function Home() {
@@ -98,25 +99,26 @@ function Home() {
 
   return (
     <>
-      <BarraNav />
       <body className="backround-container">
         <h1 className="tittle">Especialistas en el contenido</h1>
         <Container>
-          <Row>
-            {peliculas.map((pelicula) => (
-              <Col md={3} key={pelicula.id}>
-                <Card>
-                  <Card.Img variant="top" src={pelicula.imagen} />
-                  <Card.Body>
-                    <Card.Title>{pelicula.titulo}</Card.Title>
-                    <Card.Text>{pelicula.descripcion}</Card.Text>
-                    <Button variant="primary">Ver Detalles</Button>
-                  </Card.Body>
-                </Card>
-              </Col>
-            ))}
-          </Row>
-        </Container>
+      <Row>
+        {peliculas.map((pelicula) => (
+          <Col md={3} key={pelicula.id}>
+            <Card>
+              <Card.Img variant="top" src={pelicula.imagen} />
+              <Card.Body>
+                <Card.Title>{pelicula.titulo}</Card.Title>
+                <Card.Text>{pelicula.descripcion}</Card.Text>
+                <Link to={`/movie-details`}>
+                  <Button variant="primary">Ver Detalles</Button>
+                </Link>
+              </Card.Body>
+            </Card>
+          </Col>
+        ))}
+      </Row>
+    </Container>
         <h1 className="tittle">Nuestra mejor selección</h1>
         <div className="carousel-container">
           <Container>
@@ -176,7 +178,6 @@ function Home() {
         </Slider>
         </Container>
       </div>
-      <Footer />
       </body>
     </>
   );

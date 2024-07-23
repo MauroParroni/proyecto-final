@@ -10,20 +10,25 @@ import Footer from "./components/layout/footer/footer";
 import Busqueda from './components/Pages/Busqueda/busqueda';
 
 function App() {
+  const handleFilterChange = (newFilter) => {
+    console.log("New filter:", newFilter);
+  };
+
   return (
     <Router>
       <div className="app">
-        <BarraNav />
+        <BarraNav onFilterChange={handleFilterChange} />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/movie-details" element={<MovieDetails />} />
+          <Route path="/busqueda" element={<Busqueda />} />
         </Routes>
         <Footer />
       </div>
     </Router>
   );
-};
+}
 
 export default App;
-

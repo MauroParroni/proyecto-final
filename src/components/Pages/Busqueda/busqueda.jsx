@@ -34,7 +34,6 @@ function Busqueda() {
 
     return (
         <>
-            <BarraNav onFilterChange={handleFilterChange} />
             <Container>
       <Row className="my-4">
         <Col md={8}>
@@ -74,7 +73,6 @@ function Busqueda() {
         </Col>
       </Row>
     </Container>
-    <Footer onFilterChange={handleFilterChange} />
             </>
     );
 }

@@ -20,7 +20,7 @@ function BarraNav({ onFilterChange }) {
       expand="lg"
       className="navbar-transparent sticky-top px-3"
     >
-      <Navbar.Brand href="#home">
+     <Link to="/" className="navbar-brand">
         <img
           src={logo}
           width="45"
@@ -28,15 +28,19 @@ function BarraNav({ onFilterChange }) {
           className="d-inline-block align-top"
           alt="React Bootstrap logo"
         />
-      </Navbar.Brand>
+      </Link>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="me-auto">
           <Link to="/" className="nav-link active">
             Inicio
           </Link>
-          <Nav.Link onClick={() => handleFilterChange('Películas')}>Peliculas</Nav.Link>
-          <Nav.Link onClick={() => handleFilterChange('Series')}>Series</Nav.Link>
+          <Link to="/busqueda" className="nav-link active">
+            Peliculas
+          </Link>
+          <Link to="/busqueda" className="nav-link active">
+           Series
+          </Link>
         </Nav>
         <Form className="d-flex ms-auto">
           <FormControl
