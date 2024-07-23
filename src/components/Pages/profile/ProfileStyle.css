@@ -1,0 +1,99 @@
+:root{
+  --color-principal: #212529;
+}
+
+.profile {
+  min-height: 100vh;
+}
+
+.titulo-pagina {
+  font-size: 3rem;
+  color: var(--color-principal);
+  font-weight: 800;
+  text-align: center;
+  margin: 60px 0 0 0;
+}
+
+.contenedor-imagen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.imagen-perfil {
+  height: 60%;
+  border-radius: 100%;
+  filter: drop-shadow(0px 20px 15px #000000c0);
+}
+
+.contenedor-datos {
+  background-color: var(--color-principal);
+  border-radius: 20px;
+  box-shadow: 1px 1px 19px 2px #000000bf;
+}
+
+.datos {
+  color: white;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  font-size: 1.2rem;
+}
+
+.bi{
+  color: #b8b8b8;
+  margin-right: 5px;
+}
+
+.datos p:first-child{
+  margin-top: 1rem;
+}
+
+.datos p:first-child,
+.datos p:nth-child(2) {
+  margin-bottom: 60px;
+}
+
+.datos strong {
+  color: #b8b8b8;
+}
+
+.separador{
+  color: var(--color-principal);
+  margin: 80px auto 0 auto;
+  font-weight: bolder;
+  width: 80%;
+  text-align: center;
+}
+
+.titulo-peliculas {
+  font-size: 2.3rem;
+  color: var(--color-principal);
+  font-weight: 800;
+  text-align: center;
+  margin: 60px 0 0 0;
+}
+
+.contenedor-peliculas{
+  height: fit-content;
+  margin: 50px 0 100px 0 !important;
+  row-gap: 40px;
+}
+
+.pelicula-favorita{
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.titulo-pelicula{
+  color: var(--color-principal);
+  font-weight: 800;
+}
+
+.poster-pelicula {
+  height: 300px;
+  width: 200px;
+}
