@@ -6,7 +6,7 @@ import Busqueda from './components/Pages/Busqueda/busqueda';
 
 function App() {
   return (
-    <Busqueda/>
+    <MovieDetails/>
   );
 }
 

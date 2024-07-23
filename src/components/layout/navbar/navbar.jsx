@@ -1,3 +1,11 @@
+import React from 'react';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import Form from 'react-bootstrap/Form';
+import FormControl from 'react-bootstrap/FormControl';
+import Button from 'react-bootstrap/Button';
+import Dropdown from 'react-bootstrap/Dropdown';
+import logo from '../../../Images/5c5ce433-8a48-4301-91b9-d7f29644ead5.png';
 import './navbarStyle.css';
 
 function BarraNav({ onFilterChange }) {
