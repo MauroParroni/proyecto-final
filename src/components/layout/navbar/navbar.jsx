@@ -23,7 +23,7 @@ function BarraNav() {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="me-auto">
-          <Nav.Link href="#home">Inicio</Nav.Link>
+          <Nav.Link href="#homecontainer">Inicio</Nav.Link>
           <Nav.Link href="#link">Peliculas</Nav.Link>
           <Nav.Link href="#link">Series</Nav.Link>
         </Nav>
