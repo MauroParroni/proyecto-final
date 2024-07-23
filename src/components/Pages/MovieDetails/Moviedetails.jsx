@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Card, Row, Col, Modal } from "react-bootstrap";
-import BarraNav from "../../layout/navbar/navbar";
+import BarraNav from '../../layout/navbar/navbar';
 import Footer from "../../layout/footer/footer";
 import "./moviedetailStyles.css";
 
