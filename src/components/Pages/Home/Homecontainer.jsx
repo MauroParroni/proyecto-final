@@ -1,6 +1,4 @@
 import React from "react";
-import BarraNav from "../../layout/navbar/navbar";
-import Footer from "../../layout/footer/footer";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import { Carousel } from "react-bootstrap";
 import Slider from "react-slick";
