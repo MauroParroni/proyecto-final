@@ -1,0 +1,36 @@
+.series-banner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+.banner-overlay {
+  background: rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  text-align: center;
+}
+
+.series-details-content {
+  padding: 20px;
+}
+
+.series-details-content img {
+  float: left;
+  margin-right: 20px;
+  max-width: 200px;
+}
+
+.series-details-content label {
+  font-weight: bold;
+  margin-top: 10px;
+  display: block;
+}
+
+.series-details-content select {
+  margin-bottom: 10px;
+  padding: 5px;
+  font-size: 16px;
+}
