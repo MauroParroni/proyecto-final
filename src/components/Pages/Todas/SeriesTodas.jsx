@@ -12,6 +12,13 @@ function Series() {
 
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
 
+  // Calculamos qué páginas mostrar en el paginador
+  const pageNumbersToShow = pages.filter((page) => {
+    const start = Math.max(currentPage - 2, 1); // Muestra 2 páginas antes
+    const end = Math.min(currentPage + 2, totalPages); // Muestra 2 páginas después
+    return page >= start && page <= end;
+  });
+
   return (
     <Container>
       <h1>Series</h1>
@@ -32,7 +39,7 @@ function Series() {
       <Pagination>
         <Pagination.First onClick={() => setCurrentPage(1)} />
         <Pagination.Prev onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))} />
-        {pages.slice(0, 5).map((page) => (
+        {pageNumbersToShow.map((page) => (
           <Pagination.Item key={page} active={page === currentPage} onClick={() => setCurrentPage(page)}>
             {page}
           </Pagination.Item>
