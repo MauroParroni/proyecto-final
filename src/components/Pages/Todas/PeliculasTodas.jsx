@@ -1,40 +1,15 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import MovieCard from "../../layout/cards/moviecard";
+import React, { useState } from "react";
 import { Container, Row, Col, Pagination } from "react-bootstrap";
+import MovieCard from "../../layout/cards/moviecard";
+import useFetchItems from "../../../hooks/useFetchMovies";
 
 function Peliculas() {
-  const [movies, setMovies] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const moviesPerPage = 16;
-
-  useEffect(() => {
-    const fetchMovies = async () => {
-      try {
-        const response = await axios.get("https://api.themoviedb.org/3/movie/popular", {
-          params: {
-            api_key: "4e44d9029b1270a757cddc766a1bcb63",
-            language: "es-ES",
-            page: currentPage,
-          },
-        });
-        setMovies(response.data.results);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchMovies();
-  }, [currentPage]);
+  const { items: movies, loading, error, totalPages, getGenres } = useFetchItems("movie", "popular", currentPage);
 
   if (loading) return <div>Cargando...</div>;
   if (error) return <div>Error: {error}</div>;
 
-  const totalPages = 500; //
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
 
   return (
@@ -47,13 +22,13 @@ function Peliculas() {
               title={movie.title}
               description={movie.overview}
               imageUrl={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+              genres={getGenres(movie.genre_ids).join(", ")} // Mostrar géneros
               link={`/movie-details/${movie.id}`}
             />
           </Col>
         ))}
       </Row>
 
-      {/* Paginaion */}
       <Pagination>
         <Pagination.First onClick={() => setCurrentPage(1)} />
         <Pagination.Prev onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))} />

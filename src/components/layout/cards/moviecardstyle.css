@@ -1,18 +1,18 @@
 .movie-card {
     position: relative;
     overflow: hidden;
-    height: 500px;
     margin-bottom: 20px;
   }
   
   .movie-card-container {
     display: flex;
     position: relative;
+    min-height: 500px;
   }
   
   .movie-image {
     width: 100%;
-    min-height: 500px;
+    min-height: 100%;
     object-fit: cover; /* Hace que la imagen cubra toda el área sin distorsionar */
   }
   
