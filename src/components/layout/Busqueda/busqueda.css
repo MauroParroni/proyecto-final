@@ -1,0 +1,23 @@
+.results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+    margin: 20px 0;
+  }
+  
+  .movie-card {
+    text-decoration: none;
+    color: white;
+  }
+  
+  .movie-card-img {
+    width: 100%;
+    border-radius: 8px;
+  }
+  
+  .movie-card-title {
+    margin-top: 8px;
+    font-size: 14px;
+    text-align: center;
+  }
+  

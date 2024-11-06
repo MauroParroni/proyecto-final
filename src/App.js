@@ -4,7 +4,8 @@ import MovieDetails from './components/Pages/MovieDetails/Moviedetails';
 import SeriesDetails from './components/Pages/SerieDetails/Seriedetails';
 import Login from "./components/Pages/login-register/LoginContainer";
 import Register from "./components/Pages/login-register/RegisterContainer";
-import BarraNav from "./components/layout/navbar/navbar";
+import Navbar from "./components/layout/navbar/navbar";
+import Busqueda from "./components/layout/Busqueda/busqueda";
 import Peliculas from "./components/Pages/Todas/PeliculasTodas";
 import Series from "./components/Pages/Todas/SeriesTodas";
 
@@ -13,7 +14,7 @@ function App() {
   return (
     <Router>
       <div className="app">
-        <BarraNav />
+        <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
@@ -22,6 +23,7 @@ function App() {
           <Route path="/series-details/:id" element={<SeriesDetails />} />
           <Route path="/peliculas" element={<Peliculas />} />
           <Route path="/series" element={<Series />} />
+          <Route path="/busqueda" element={<Busqueda />} />
         </Routes>
       </div>
     </Router>
