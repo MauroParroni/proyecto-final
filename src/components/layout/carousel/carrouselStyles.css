@@ -1,0 +1,59 @@
+.carousel,
+.slider-container {
+  width: 100%;
+  overflow: hidden; /* Para evitar desplazamiento horizontal */
+  max-width: 100%; /* Limita el ancho del carrusel */
+  padding: 10px 0; /* Espaciado alrededor del carrusel */
+}
+
+.slick-list {
+  overflow: hidden; /* Evita el desplazamiento horizontal */
+}
+
+/* Estilo para las flechas de navegación (siguiente y anterior) */
+.slick-prev,
+.slick-next {
+  color: white;
+  border-radius: 50%;
+  padding: 10px;
+  z-index: 100;
+}
+
+.slick-prev {
+  left: 20px !important; /* Coloca la flecha a la izquierda */
+}
+
+.slick-next {
+  right: 20px !important; /* Coloca la flecha a la derecha */
+}
+
+
+
+/* Ajustar el tamaño de las imágenes dentro de las tarjetas */
+.slick-slide img {
+  width: 100%; /* Ocupa el 100% del ancho de la tarjeta */
+  height: auto; /* Mantener la proporción de la imagen */
+  border-radius: 10px;
+}
+
+/* Estilos para la animación y hover en las imágenes */
+.slick-slide:hover img {
+  transform: scale(1.05); /* Aumenta ligeramente el tamaño en hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra en hover */
+}
+/* Estilo para las tarjetas dentro del carrusel */
+.slick-slide > div {
+  padding: 5px; /* Espaciado entre tarjetas */
+}
+
+.slick-slide {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.slick-slide img {
+  max-height: 600px; /* Limitar la altura máxima de la imagen */
+  object-fit: cover; /* Asegura que la imagen ocupe toda la tarjeta sin deformarse */
+}
+

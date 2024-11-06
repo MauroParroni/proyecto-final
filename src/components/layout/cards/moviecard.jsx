@@ -1,23 +1,31 @@
 import React from "react";
 import { Card, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { Button } from "react-bootstrap";
+import { FaPlay } from "react-icons/fa"; // Icono de Play de react-icons
+import "./moviecardstyle.css";
 
-const MovieCard = ({ title, description, imageUrl, type, link }) => {
+const MovieCard = ({ title, description, imageUrl, link, genres }) => {
   return (
-    <Card className="mb-3">
-      <Image src={imageUrl} fluid />
-      <Card.Body>
-        <Card.Title>{title}</Card.Title>
-        <Card.Text>
-          Tipo: {type}
-          <br />
-          Descripción: {description}
-        </Card.Text>
-        <Link to={link}>
-          <Button variant="primary">Ver Detalles</Button>
-        </Link>
-      </Card.Body>
+    <Card className="movie-card mb-3">
+      <div className="movie-card-container">
+        <Image src={imageUrl} fluid className="movie-image" />
+        <div className="movie-info">
+          <Card.Body>
+            <Card.Title>{title}</Card.Title>
+            <Card.Text>
+            <Card.Text>
+              <strong>Géneros:</strong> {genres || "Sin géneros"}
+            </Card.Text>
+              <strong>Descripción:</strong> {description || "Sin descripción"}
+            </Card.Text>
+            <Link to={link}>
+              <button className="play-button">
+                <FaPlay />
+              </button>
+            </Link>
+          </Card.Body>
+        </div>
+      </div>
     </Card>
   );
 };

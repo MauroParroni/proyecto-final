@@ -133,13 +133,13 @@ function BarraNav() {
             </div>
           )}
         </Form>
-        <Dropdown align="end">
+        {/*<Dropdown align="end">
           <Dropdown.Toggle variant="outline-light">Login</Dropdown.Toggle>
           <Dropdown.Menu>
             <Link to="/login" className="dropdown-item">Login</Link>
             <Link to="/register" className="dropdown-item">Registrarse</Link>
           </Dropdown.Menu>
-        </Dropdown>
+        </Dropdown>*/}
       </Navbar.Collapse>
     </Navbar>
   );

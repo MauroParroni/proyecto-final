@@ -1,0 +1,84 @@
+.movie-card {
+    position: relative;
+    overflow: hidden;
+    height: 500px;
+    margin-bottom: 20px;
+  }
+  
+  .movie-card-container {
+    display: flex;
+    position: relative;
+  }
+  
+  .movie-image {
+    width: 100%;
+    min-height: 500px;
+    object-fit: cover; /* Hace que la imagen cubra toda el área sin distorsionar */
+  }
+  
+  .movie-info {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.6); /* Fondo oscuro semi-transparente */
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transform: translateX(100%); /* La info comienza fuera de la card */
+    transition: transform 0.3s ease;
+    height: 100%;
+    overflow-y: auto; /* Permite el desplazamiento vertical */
+  }
+  
+  .movie-card:hover .movie-info {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0); /* La info entra en la card */
+  }
+  
+  .card-body {
+    padding: 0;
+  }
+  
+  .card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+  
+  .card-text {
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+  }
+  
+  .play-button {
+    background-color: #ff5722; /* Naranja */
+    border: none;
+    border-radius: 50%;
+    padding: 15px;
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    margin-top: 10px;
+    position: relative;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%); /* Centrado horizontalmente */
+    transition: background-color 0.3s ease;
+  }
+  
+  .play-button:hover {
+    background-color: #ff7043;
+  }
+  
+  .play-button:focus {
+    outline: none; /* Quita el borde de enfoque */
+  }
+  
