@@ -36,19 +36,25 @@ function MovieDetails() {
     const fetchMoviesRecommendations = async () => {
       if (movie) {
         try {
-          const response = await axios.get(`https://api.themoviedb.org/3/movie/${id}/recommendations`, {
+        
+          const selectedGenres = movie.genres.map(genre => genre.id);
+    
+          const response = await axios.get("https://api.themoviedb.org/3/discover/movie", {
             params: {
               api_key: "4e44d9029b1270a757cddc766a1bcb63",
               language: "es-ES",
+              with_genres: selectedGenres.join(','), 
+              page: 1,  
             },
           });
-          setRecommendedMovies(response.data.results);
+    
+          setRecommendedMovies(response.data.results); 
         } catch (err) {
-          setError(err.message);
+          setError(err.message);  
         }
       }
     };
-
+    
     fetchMoviesRecommendations();
   }, [id, movie]);
 

@@ -64,10 +64,14 @@ function SerieDetails() {
     const fetchSeriesRecommendations = async () => {
       if (series) {
         try {
-          const response = await axios.get(`https://api.themoviedb.org/3/tv/${id}/recommendations`, {
+          const selectedGenres = series.genres.map(genre => genre.id);
+          const response = await axios.get(`https://api.themoviedb.org/3/discover/tv`, {
             params: {
               api_key: "4e44d9029b1270a757cddc766a1bcb63",
               language: "es-ES",
+              with_genres: selectedGenres.join(','), 
+              page: 1,
+
             },
           });
           setRecommendedSeries(response.data.results);
