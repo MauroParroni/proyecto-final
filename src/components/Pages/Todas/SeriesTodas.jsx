@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Pagination } from "react-bootstrap";
 import MovieCard from "../../layout/cards/moviecard";
-import useFetchItems from "../../../hooks/useFetchMovies";
+import useFetchItems from "../../../hooks/useFetchMovies"; 
 
 function Series() {
   const [currentPage, setCurrentPage] = useState(1);
-  const { items: series, loading, error, totalPages, getGenres } = useFetchItems("tv", "top_rated", currentPage);
+  const { items: series, loading, error, totalPages, getGenres } = useFetchItems("tv", "popular", currentPage);
 
   if (loading) return <div>Cargando...</div>;
   if (error) return <div>Error: {error}</div>;

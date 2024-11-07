@@ -1,6 +1,6 @@
 import React from "react";
 import Slider from "react-slick";
-import MovieCard from "../cards/moviecard"; // Asume que el componente MovieCard está correctamente configurado
+import MovieCard from "../cards/moviecard";
 import "./carrouselStyles.css";
 
 const SeriesCarousel = ({ series, genres }) => {

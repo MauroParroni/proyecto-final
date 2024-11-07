@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import MovieCarousel from "../../layout/carousel/MovieCarousel"; // Carrusel de películas
+import MovieCarousel from "../../layout/carousel/MoviesCarousel"; // Carrusel de películas
 import SeriesCarousel from "../../layout/carousel/seriescarousel"; // Carrusel de series
 import useFetchItems from "../../../hooks/useFetchMovies"; // Hook para obtener datos de la API
 import "slick-carousel/slick/slick.css";

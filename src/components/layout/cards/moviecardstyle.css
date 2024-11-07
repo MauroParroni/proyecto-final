@@ -7,13 +7,13 @@
   .movie-card-container {
     display: flex;
     position: relative;
-    min-height: 500px;
+    height: 550px;
   }
   
   .movie-image {
     width: 100%;
     min-height: 100%;
-    object-fit: cover; /* Hace que la imagen cubra toda el área sin distorsionar */
+    object-fit:cover; /* Hace que la imagen cubra toda el área sin distorsionar */
   }
   
   .movie-info {
