@@ -4,21 +4,33 @@ body {
   padding: 0;
 }
 
+/* Ajuste para pantallas más pequeñas */
 @media screen and (max-width: 768px) {
   body {
     font-size: 14px;
   }
-}
-
-@media screen and (max-width: 768px) and (max-width: 1024px) {
-  body {
-    font-size: 16px;
+  .title {
+    font-size: 32px; /* Reducimos el tamaño del título en pantallas más pequeñas */
   }
 }
 
-@media screen and (max-width: 1024px) {
+/* Ajuste para pantallas de 768px a 1024px */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  body {
+    font-size: 16px;
+  }
+  .title {
+    font-size: 38px; /* Ajuste de tamaño del título para tablets */
+  }
+}
+
+/* Ajuste para pantallas grandes (1024px en adelante) */
+@media screen and (min-width: 1025px) {
   body {
     font-size: 18px;
+  }
+  .title {
+    font-size: 45px; /* Título más grande en pantallas grandes */
   }
 }
 
@@ -27,6 +39,7 @@ body {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  min-height: 100vh; /* Asegura que el fondo cubra toda la pantalla */
 }
 
 .title {
@@ -38,41 +51,48 @@ body {
   font-size: 45px;
   background-color: rgba(0, 0, 0, 0.596);
   border-radius: 30px;
+  padding: 20px;
 }
 
 .carousel {
-  max-width: 800px;
-  padding: 20px 0;
-  margin: 0 auto;
+  width: 100%;
+  height: 500px; /* Ajustamos la altura de los carruseles */
+  margin-bottom: 30px;
+  position: relative;
+  overflow: hidden;
 }
 
-.carousel-img {
+.carousel-item img {
   width: 100%;
-  height: auto;
-  object-fit: cover;
+  height: 100%;
+  object-fit: cover; /* Asegura que las imágenes cubran el área sin distorsión */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+/* Contenido de la descripción en el carrusel */
 .carousel-caption {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%); /* Centra la caption en el medio */
+  transform: translate(-50%, -50%); /* Centrado */
   text-align: center;
-  color: white;  /* Asegúrate de que el texto sea visible sobre las imágenes */
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro para mejorar la legibilidad */
+  padding: 10px;
+  border-radius: 10px;
 }
 
-.carousel-text h3 {
+.carousel-caption h3 {
   font-size: 2rem;
   font-weight: bold;
 }
 
-.carousel-text p {
+.carousel-caption p {
   font-size: 1.2rem;
 }
 
 .slider-container {
-  max-width: 100%;
+  width: 100%;
   margin: auto;
   padding: 20px 0;
 }
@@ -81,9 +101,25 @@ body {
   padding: 10px;
 }
 
+/* Efectos al hacer hover sobre los items del carrusel */
 .slider-item:hover .carousel-img {
   transform: scale(1.05);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   border: 2px solid #ffffff;
   border-radius: 10px;
+}
+
+/* Ajustes responsivos */
+@media (max-width: 768px) {
+  .carousel {
+    height: 300px; /* Ajustamos la altura para pantallas más pequeñas */
+  }
+
+  .carousel-caption h3 {
+    font-size: 1.2rem; /* Reducimos el tamaño del título */
+  }
+
+  .carousel-caption p {
+    font-size: 1rem; /* Reducimos el tamaño del texto */
+  }
 }

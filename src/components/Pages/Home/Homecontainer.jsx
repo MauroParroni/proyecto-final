@@ -1,30 +1,44 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
+import MovieCarousel from "../../layout/carousel/MoviesCarousel"; // Carrusel de películas
+import SeriesCarousel from "../../layout/carousel/seriescarousel"; // Carrusel de series
+import useFetchItems from "../../../hooks/useFetchMovies"; // Hook para obtener datos de la API
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./homecontainer.css";
-import MovieCard from "../../layout/cards/moviecard";
-import useFetchMovies from "../../../hooks/useFetchMovies";
 
 function Home() {
-  const { items: movies, loading: loadingMovies, error: errorMovies } = useFetchMovies("movie", "popular");
-  const { items: series, loading: loadingSeries, error: errorSeries } = useFetchMovies("tv", "top_rated");
+  const [movieGenres, setMovieGenres] = useState({});
+  const [seriesGenres, setSeriesGenres] = useState({});
 
-  const sliderSettings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 1000,
-    responsive: [
-      { breakpoint: 1024, settings: { slidesToShow: 3, slidesToScroll: 1 } },
-      { breakpoint: 600, settings: { slidesToShow: 2, slidesToScroll: 1 } },
-      { breakpoint: 480, settings: { slidesToShow: 1, slidesToScroll: 1 } },
-    ],
-  };
+  // Fetch de películas populares
+  const { items: movies, loading: loadingMovies, error: errorMovies, getGenres: getMovieGenres } = useFetchItems("movie", "popular");
 
+  // Fetch de series más valoradas
+  const { items: series, loading: loadingSeries, error: errorSeries, getGenres: getSeriesGenres } = useFetchItems("tv", "top_rated");
+
+  // Establecer los géneros de películas y series cuando los datos cambian
+  useEffect(() => {
+    if (movies.length > 0) {
+      const movieGenresMap = {};
+      movies.forEach((movie) => {
+        movieGenresMap[movie.id] = getMovieGenres(movie.genre_ids).join(", ");
+      });
+      setMovieGenres(movieGenresMap);
+    }
+  }, [movies, getMovieGenres]);
+
+  useEffect(() => {
+    if (series.length > 0) {
+      const seriesGenresMap = {};
+      series.forEach((serie) => {
+        seriesGenresMap[serie.id] = getSeriesGenres(serie.genre_ids).join(", ");
+      });
+      setSeriesGenres(seriesGenresMap);
+    }
+  }, [series, getSeriesGenres]);
+
+  // Comprobación de carga y error
   if (loadingMovies || loadingSeries) return <div>Cargando...</div>;
   if (errorMovies || errorSeries) return <div>Error: {errorMovies || errorSeries}</div>;
 
@@ -33,39 +47,13 @@ function Home() {
       <body className="background-container">
         <h1 className="title">Especialistas en el contenido</h1>
         
-        {/* Sección de Películas */}
+        {/* Sección de Películas Populares */}
         <h2 className="title">Películas Populares</h2>
-        <Container>
-          <Row>
-            {movies.map((movie) => (
-              <Col md={3} key={movie.id}>
-                <MovieCard
-                  title={movie.title}
-                  description={movie.overview}
-                  imageUrl={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                  link={`/movie-details/${movie.id}`}
-                />
-              </Col>
-            ))}
-          </Row>
-        </Container>
+        <MovieCarousel movies={movies} genres={movieGenres} />
 
-        {/* Sección de Series */}
+        {/* Sección de Series Populares */}
         <h2 className="title">Series Populares</h2>
-        <Container>
-          <Row>
-            {series.map((serie) => (
-              <Col md={3} key={serie.id}>
-                <MovieCard
-                  title={serie.name}
-                  description={serie.overview}
-                  imageUrl={`https://image.tmdb.org/t/p/w500${serie.poster_path}`}
-                  link={`/series-details/${serie.id}`}
-                />
-              </Col>
-            ))}
-          </Row>
-        </Container>
+        <SeriesCarousel series={series} genres={seriesGenres} />
       </body>
     </>
   );
