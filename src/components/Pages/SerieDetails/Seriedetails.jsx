@@ -70,7 +70,7 @@ function SerieDetails() {
               api_key: "4e44d9029b1270a757cddc766a1bcb63",
               language: "es-ES",
               with_genres: selectedGenres.join(','), 
-              page: 1,
+              page: 2,
 
             },
           });
