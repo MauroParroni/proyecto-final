@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import RecommendationCarousel from "../../layout/carousel/RecommendationCarousel";
 import useFetchItems from "../../../hooks/useFetchMovies"; 
 import "./seriedetailStyles.css";
+import { PacmanLoader } from "react-spinners";
 
 function SerieDetails() {
   const { id } = useParams();
@@ -85,7 +86,11 @@ function SerieDetails() {
   }, [id, series]);
 
 
-  if (loading) return <div>Cargando...</div>;
+  if (loading)return (
+      <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
+        <PacmanLoader color="#FFD700" size={50} />
+      </div>
+    );
   if (error) return <div>Error: {error}</div>;
 
   const embedLink = `https://www.2embed.cc/embedtv/${id}&s=${selectedSeason}&e=${selectedEpisode}`;

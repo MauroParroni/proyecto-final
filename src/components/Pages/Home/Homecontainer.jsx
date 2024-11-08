@@ -6,6 +6,8 @@ import useFetchItems from "../../../hooks/useFetchMovies"; // Hook para obtener 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./homecontainer.css";
+import { PacmanLoader } from "react-spinners";
+
 
 function Home() {
   const [movieGenres, setMovieGenres] = useState({});
@@ -39,8 +41,14 @@ function Home() {
   }, [series, getSeriesGenres]);
 
   // Comprobación de carga y error
-  if (loadingMovies || loadingSeries) return <div>Cargando...</div>;
   if (errorMovies || errorSeries) return <div>Error: {errorMovies || errorSeries}</div>;
+  if (loadingMovies || loadingSeries) {
+    return (
+      <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
+        <PacmanLoader color="#FFD700" size={50} />
+      </div>
+    );
+  }
 
   return (
     <>

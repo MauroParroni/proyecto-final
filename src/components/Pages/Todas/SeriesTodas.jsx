@@ -2,12 +2,16 @@ import React, { useState } from "react";
 import { Container, Row, Col, Pagination } from "react-bootstrap";
 import MovieCard from "../../layout/cards/moviecard";
 import useFetchItems from "../../../hooks/useFetchMovies"; 
-
+import { PacmanLoader } from "react-spinners";
 function Series() {
   const [currentPage, setCurrentPage] = useState(1);
   const { items: series, loading, error, totalPages, getGenres } = useFetchItems("tv", "popular", currentPage);
 
-  if (loading) return <div>Cargando...</div>;
+  if (loading) return (
+    <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
+      <PacmanLoader color="#FFD700" size={50} />
+    </div>
+  );
   if (error) return <div>Error: {error}</div>;
 
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
