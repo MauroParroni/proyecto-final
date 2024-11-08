@@ -122,7 +122,7 @@ function SerieDetails() {
           )}
 
           {/* Series Details */}
-          <div className="series-details-content">
+          <div className="series-details-content d-flex flex-column flex-sm-row justify-content-center align-items-center ">
             <div className="series-poster">
               <img src={posterUrl} alt={series.name} />
             </div>

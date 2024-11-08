@@ -6,7 +6,6 @@ import Navbar from "react-bootstrap/Navbar";
 import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/Button";
-import Dropdown from "react-bootstrap/Dropdown";
 import logo from "../../../Images/VePelis-removebg-preview.png";
 import "./navbarStyle.css";
 
@@ -14,6 +13,7 @@ function BarraNav() {
   const [query, setQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [isNavbarOpen, setIsNavbarOpen] = useState(false); // Estado para controlar si el Navbar está abierto o cerrado
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -71,6 +71,13 @@ function BarraNav() {
     setShowDropdown(false);
   };
 
+  // Cerrar el Navbar al hacer clic en un enlace
+  const handleLinkClick = () => {
+    if (isNavbarOpen) {
+      setIsNavbarOpen(false); // Cerrar el Navbar
+    }
+  };
+
   useEffect(() => {
     setQuery("");
     setShowDropdown(false);
@@ -83,16 +90,16 @@ function BarraNav() {
   };
 
   return (
-    <Navbar bg="dark" data-bs-theme="dark" expand="lg" className="navbar-transparent sticky-top px-3">
-      <Link to="/" className="navbar-brand">
+    <Navbar bg="dark" data-bs-theme="dark" expand="lg" className="navbar-transparent sticky-top px-3" expanded={isNavbarOpen}>
+      <Link to="/" className="navbar-brand" onClick={handleLinkClick}>
         <img src={logo} width="45" height="45" className="d-inline-block align-top" alt="React Bootstrap logo" />
       </Link>
-      <Navbar.Toggle aria-controls="basic-navbar-nav" />
+      <Navbar.Toggle aria-controls="basic-navbar-nav" onClick={() => setIsNavbarOpen(!isNavbarOpen)} />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="me-auto">
-          <Link to="/" className="nav-link active">Inicio</Link>
-          <Link to="/peliculas" className="nav-link active">Peliculas</Link>
-          <Link to="/series" className="nav-link active">Series</Link>
+          <Link to="/" className="nav-link active" onClick={handleLinkClick}>Inicio</Link>
+          <Link to="/peliculas" className="nav-link active" onClick={handleLinkClick}>Peliculas</Link>
+          <Link to="/series" className="nav-link active" onClick={handleLinkClick}>Series</Link>
         </Nav>
         <Form className="d-flex ms-auto position-relative" onSubmit={(e) => e.preventDefault()}>
           <FormControl
@@ -133,13 +140,6 @@ function BarraNav() {
             </div>
           )}
         </Form>
-        {/*<Dropdown align="end">
-          <Dropdown.Toggle variant="outline-light">Login</Dropdown.Toggle>
-          <Dropdown.Menu>
-            <Link to="/login" className="dropdown-item">Login</Link>
-            <Link to="/register" className="dropdown-item">Registrarse</Link>
-          </Dropdown.Menu>
-        </Dropdown>*/}
       </Navbar.Collapse>
     </Navbar>
   );
