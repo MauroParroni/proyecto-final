@@ -6,34 +6,50 @@ import "./carrouselStyles.css";
 
 const RecommendationCarousel = ({ recommendedItems, type, genres }) => {
     const { items: series, loading, error, totalPages, getGenres} = useFetchItems("tv", "popular");
-  const sliderSettings = {
-    dots: false, 
-    infinite: true,
-    speed: 800,
-    slidesToShow: 4, 
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 2000,
-    centerMode: true, 
-    cssEase: "ease-in-out", // Esto hace que la transición sea más suave
-    responsive: [
-      { breakpoint: 1024, settings: { slidesToShow: 3 } }, // 3 cards en pantallas medianas
-      { breakpoint: 768, settings: { slidesToShow: 2 } },  // 2 cards en pantallas pequeñas
-      { breakpoint: 480, settings: { slidesToShow: 1 } },  // 1 card en pantallas muy pequeñas
-    ],
-    nextArrow: (
-      <button className="slick-next">
-      </button>
-    ),
-    prevArrow: (
-      <button className="slick-prev">
-      </button>
-    ),
-  };
+    const sliderSettings = {
+      dots: false, 
+      infinite: true,
+      speed: 800,
+      slidesToShow: 4, 
+      slidesToScroll: 1,
+      autoplay: true,
+      autoplaySpeed: 2000,
+      centerMode: true,  
+      cssEase: "ease-in-out", 
+      responsive: [
+        {
+          breakpoint: 1024, 
+          settings: {
+            slidesToShow: 3, 
+          },
+        },
+        {
+          breakpoint: 768, 
+          settings: {
+            slidesToShow: 2, 
+          },
+        },
+        {
+          breakpoint: 480,
+          settings: {
+            slidesToShow: 1, 
+          },
+        },
+      ],
+      nextArrow: (
+        <button className="slick-next">
+        </button>
+      ),
+      prevArrow: (
+        <button className="slick-prev">
+        </button>
+      ),
+    };
+    
 
   return (
 <div className={`recommendation-carousel ${type}`}>
-  <h2>{type === "movie" ? "Películas Recomendadas" : "Series Recomendadas"}</h2>
+  <h2 className="carrousel-title">{type === "movie" ? "Películas Recomendadas" : "Series Recomendadas"}</h2>
   <Slider {...sliderSettings}>
     {recommendedItems.map((item) => (
       <div key={item.id} className="carousel-item">

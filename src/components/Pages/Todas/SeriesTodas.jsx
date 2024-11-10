@@ -3,6 +3,8 @@ import { Container, Row, Col, Pagination } from "react-bootstrap";
 import MovieCard from "../../layout/cards/moviecard";
 import useFetchItems from "../../../hooks/useFetchMovies"; 
 import { PacmanLoader } from "react-spinners";
+import './todasStyles.css'
+
 function Series() {
   const [currentPage, setCurrentPage] = useState(1);
   const { items: series, loading, error, totalPages, getGenres } = useFetchItems("tv", "popular", currentPage);
@@ -25,10 +27,10 @@ function Series() {
 
   return (
     <Container>
-      <h1>Series</h1>
+      <h1 className="page-title">Series</h1>
       <Row>
         {series.map((serie) => (
-          <Col md={3} key={serie.id}>
+          <Col xs={6} sm={6} md={6} lg={4} key={serie.id}> {/* Ajuste de las columnas para 2 cards por fila */}
             <MovieCard
               title={serie.name}
               description={serie.overview}
@@ -40,7 +42,7 @@ function Series() {
         ))}
       </Row>
 
-      <Pagination>
+      <Pagination className="justify-content-center">
         <Pagination.First onClick={() => setCurrentPage(1)} />
         <Pagination.Prev onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))} />
         {pageNumbersToShow.map((page) => (

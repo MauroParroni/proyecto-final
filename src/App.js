@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import Home from "./components/Pages/Home/Homecontainer";
 import MovieDetails from './components/Pages/MovieDetails/Moviedetails';
 import SeriesDetails from './components/Pages/SerieDetails/Seriedetails';
@@ -8,13 +8,16 @@ import Navbar from "./components/layout/navbar/navbar";
 import Busqueda from "./components/layout/Busqueda/busqueda";
 import Peliculas from "./components/Pages/Todas/PeliculasTodas";
 import Series from "./components/Pages/Todas/SeriesTodas";
+import ScrollToTop from "./components/layout/Scroll/scrolltoTop";
 
 
 function App() {
-  return (
+
+  return ( 
     <Router>
       <div className="app">
         <Navbar />
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
