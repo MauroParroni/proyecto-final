@@ -30,7 +30,7 @@ function Peliculas() {
       <h1 className="page-title">Películas</h1>
       <Row>
         {movies.map((movie) => (
-          <Col xs={6} sm={6} md={6} lg={4} key={movie.id}>
+          <Col xs={6} sm={6} md={6} lg={3} key={movie.id}>
             <MovieCard
               title={movie.title}
               description={movie.overview}

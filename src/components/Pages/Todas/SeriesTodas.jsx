@@ -30,7 +30,7 @@ function Series() {
       <h1 className="page-title">Series</h1>
       <Row>
         {series.map((serie) => (
-          <Col xs={6} sm={6} md={6} lg={4} key={serie.id}> {/* Ajuste de las columnas para 2 cards por fila */}
+          <Col xs={6} sm={6} md={6} lg={3} key={serie.id}> {/* Ajuste de las columnas para 2 cards por fila */}
             <MovieCard
               title={serie.name}
               description={serie.overview}
