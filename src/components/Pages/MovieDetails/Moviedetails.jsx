@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
+import { Container } from "react-bootstrap";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import RecommendationCarousel from "../../layout/carousel/RecommendationCarousel";
 import useFetchItems from "../../../hooks/useFetchMovies";
 import "./moviedetailStyles.css";
 import { PacmanLoader } from "react-spinners";
+import Lottie from "react-lottie";
+import * as robotError from "../../../assets/robot-error.json";
 
 function MovieDetails() {
   const { id } = useParams();
@@ -73,7 +76,26 @@ function MovieDetails() {
         <PacmanLoader color="#FFD700" size={50} />
       </div>
     );
-  if (error) return <div>Error: {error}</div>;
+    if (error) {
+      const defaultOptions = {
+        loop: true,
+        autoplay: true, 
+        animationData: robotError, // La animación JSON de tu robotito
+        rendererSettings: {
+          preserveAspectRatio: "xMidYMid slice"
+        }
+      };
+  
+      return (
+        <Container className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
+          <div className="text-center">
+            <Lottie options={defaultOptions} height={200} width={200} />
+            <h3 style={{ color: "#FF0000" }}>¡Ups! Algo salió mal. :(</h3>
+            <p>{error}</p>
+          </div>
+        </Container>
+      );
+    }
 
   const embedLink = `https://www.2embed.cc/embed/${movie.imdb_id}`;
   const bannerUrl = `https://image.tmdb.org/t/p/original${movie.backdrop_path}`;

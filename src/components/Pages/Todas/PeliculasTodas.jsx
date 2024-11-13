@@ -4,6 +4,8 @@ import MovieCard from "../../layout/cards/moviecard";
 import useFetchItems from "../../../hooks/useFetchMovies";
 import { PacmanLoader } from "react-spinners";
 import './todasStyles.css';
+import Lottie from "react-lottie";
+import * as robotError from "../../../assets/robot-error.json";
 
 function Peliculas() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -14,7 +16,26 @@ function Peliculas() {
       <PacmanLoader color="#FFD700" size={50} />
     </div>
   );
-  if (error) return <div>Error: {error}</div>;
+  if (error) {
+    const defaultOptions = {
+      loop: true,
+      autoplay: true, 
+      animationData: robotError, // La animación JSON de tu robotito
+      rendererSettings: {
+        preserveAspectRatio: "xMidYMid slice"
+      }
+    };
+
+    return (
+      <Container className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
+        <div className="text-center">
+          <Lottie options={defaultOptions} height={200} width={200} />
+          <h3 style={{ color: "#FF0000" }}>¡Ups! Algo salió mal. :(</h3>
+          <p>{error}</p>
+        </div>
+      </Container>
+    );
+  }
 
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
 

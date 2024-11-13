@@ -5,6 +5,9 @@ import RecommendationCarousel from "../../layout/carousel/RecommendationCarousel
 import useFetchItems from "../../../hooks/useFetchMovies"; 
 import "./seriedetailStyles.css";
 import { PacmanLoader } from "react-spinners";
+import Lottie from "react-lottie";
+import * as robotError from "../../../assets/robot-error.json";
+import { Container } from "react-bootstrap";
 
 function SerieDetails() {
   const { id } = useParams();
@@ -91,7 +94,26 @@ function SerieDetails() {
         <PacmanLoader color="#FFD700" size={50} />
       </div>
     );
-  if (error) return <div>Error: {error}</div>;
+    if (error) {
+      const defaultOptions = {
+        loop: true,
+        autoplay: true, 
+        animationData: robotError, // La animación JSON de tu robotito
+        rendererSettings: {
+          preserveAspectRatio: "xMidYMid slice"
+        }
+      };
+  
+      return (
+        <Container className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
+          <div className="text-center">
+            <Lottie options={defaultOptions} height={200} width={200} />
+            <h3 style={{ color: "#FF0000" }}>¡Ups! Algo salió mal. :(</h3>
+            <p>{error}</p>
+          </div>
+        </Container>
+      );
+    }
 
   const embedLink = `https://www.2embed.cc/embedtv/${id}&s=${selectedSeason}&e=${selectedEpisode}`;
   const bannerUrl = `https://image.tmdb.org/t/p/original${series.backdrop_path}`;
