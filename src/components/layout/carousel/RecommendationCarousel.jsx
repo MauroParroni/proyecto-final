@@ -30,6 +30,12 @@ const RecommendationCarousel = ({ recommendedItems, type, genres }) => {
           },
         },
         {
+          breakpoint: 550, 
+          settings: {
+            slidesToShow: 1, 
+          },
+        },
+        {
           breakpoint: 480,
           settings: {
             slidesToShow: 1, 

@@ -16,8 +16,9 @@ const sliderSettings = {
     centerMode: true, 
     cssEase: "ease-in-out", // Esto hace que la transición sea más suave
     responsive: [
-      { breakpoint: 1024, settings: { slidesToShow: 3 } }, // 3 cards en pantallas medianas
+      { breakpoint: 1024, settings: { slidesToShow: 2 } }, // 3 cards en pantallas medianas
       { breakpoint: 768, settings: { slidesToShow: 2 } },  // 2 cards en pantallas pequeñas
+      { breakpoint: 550, settings: {slidesToShow: 1}},
       { breakpoint: 480, settings: { slidesToShow: 1 } },  // 1 card en pantallas muy pequeñas
     ],
     nextArrow: (
