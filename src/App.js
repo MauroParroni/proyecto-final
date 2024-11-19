@@ -9,6 +9,8 @@ import Busqueda from "./components/layout/Busqueda/busqueda";
 import Peliculas from "./components/Pages/Todas/PeliculasTodas";
 import Series from "./components/Pages/Todas/SeriesTodas";
 import ScrollToTop from "./components/layout/Scroll/scrolltoTop";
+import Generos from "./components/Pages/Generos/Generos";
+import NotFound from "./components/Pages/NotFound/NotFound";
 
 
 function App() {
@@ -20,6 +22,7 @@ function App() {
         <ScrollToTop />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="*" element={<NotFound />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/movie-details/:id" element={<MovieDetails />} />
@@ -27,6 +30,8 @@ function App() {
           <Route path="/peliculas" element={<Peliculas />} />
           <Route path="/series" element={<Series />} />
           <Route path="/busqueda" element={<Busqueda />} />
+          <Route path="/peliculas/genero/:id" element={<Generos tipo="peliculas" />} />
+          <Route path="/series/genero/:id" element={<Generos tipo="series" />} />
         </Routes>
       </div>
     </Router>
