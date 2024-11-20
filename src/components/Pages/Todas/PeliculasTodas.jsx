@@ -1,48 +1,38 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Pagination } from "react-bootstrap";
 import MovieCard from "../../layout/cards/moviecard";
-import useFetchItems from "../../../hooks/useFetchMovies";
 import { PacmanLoader } from "react-spinners";
 import './todasStyles.css';
-import Lottie from "react-lottie";
-import * as robotError from "../../../assets/robot-error.json";
+import useFetchItems from "../../../hooks/useFetchMovies";
+import Robotito from "../../layout/RobotError/Robotito";
 
 function Peliculas() {
   const [currentPage, setCurrentPage] = useState(1);
-  const { items: movies, loading, error, totalPages, getGenres } = useFetchItems("movie", "popular", currentPage);
 
-  if (loading) return (
-    <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
-      <PacmanLoader color="#FFD700" size={50} />
-    </div>
-  );
-  if (error) {
-    const defaultOptions = {
-      loop: true,
-      autoplay: true, 
-      animationData: robotError, // La animación JSON de tu robotito
-      rendererSettings: {
-        preserveAspectRatio: "xMidYMid slice"
-      }
-    };
+  const { items: movies, loading, error, totalPages, getGenres } = useFetchItems("movie", currentPage);
 
+  const handlePageChange = (page) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+    }
+  };
+
+  if (loading) {
     return (
-      <Container className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
-        <div className="text-center">
-          <Lottie options={defaultOptions} height={200} width={200} />
-          <h3 style={{ color: "#FF0000" }}>¡Ups! Algo salió mal. :(</h3>
-          <p>{error}</p>
-        </div>
-      </Container>
+      <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
+        <PacmanLoader color="#FFD700" size={50} />
+      </div>
     );
   }
 
-  const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+  if (error) {
+    return <Robotito errorMessage={error} />;
+  }
 
-  // Calculamos qué páginas mostrar en el paginador
+  const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
   const pageNumbersToShow = pages.filter((page) => {
-    const start = Math.max(currentPage - 2, 1); // Muestra 2 páginas antes
-    const end = Math.min(currentPage + 2, totalPages); // Muestra 2 páginas después
+    const start = Math.max(currentPage - 2, 1);
+    const end = Math.min(currentPage + 2, totalPages);
     return page >= start && page <= end;
   });
 
@@ -56,7 +46,7 @@ function Peliculas() {
               title={movie.title}
               description={movie.overview}
               imageUrl={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-              genres={getGenres(movie.genre_ids).join(", ")} // Mostrar géneros
+              genres={getGenres(movie.genre_ids, "movie").join(", ")}
               link={`/movie-details/${movie.id}`}
             />
           </Col>
@@ -64,15 +54,19 @@ function Peliculas() {
       </Row>
 
       <Pagination className="justify-content-center">
-        <Pagination.First onClick={() => setCurrentPage(1)} />
-        <Pagination.Prev onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))} />
+        <Pagination.First onClick={() => handlePageChange(1)} />
+        <Pagination.Prev onClick={() => handlePageChange(currentPage - 1)} />
         {pageNumbersToShow.map((page) => (
-          <Pagination.Item key={page} active={page === currentPage} onClick={() => setCurrentPage(page)}>
+          <Pagination.Item
+            key={page}
+            active={page === currentPage}
+            onClick={() => handlePageChange(page)}
+          >
             {page}
           </Pagination.Item>
         ))}
-        <Pagination.Next onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))} />
-        <Pagination.Last onClick={() => setCurrentPage(totalPages)} />
+        <Pagination.Next onClick={() => handlePageChange(currentPage + 1)} />
+        <Pagination.Last onClick={() => handlePageChange(totalPages)} />
       </Pagination>
     </Container>
   );

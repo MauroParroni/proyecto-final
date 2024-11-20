@@ -4,8 +4,9 @@ import axios from "axios";
 import { Container, Row, Col } from "react-bootstrap";
 import MovieCard from "../../layout/cards/moviecard";
 import { PacmanLoader } from "react-spinners";
-import Lottie from "react-lottie";
 import * as robotError from "../../../assets/robot-error.json";
+import useFetchItems from "../../../hooks/useFetchMovies";
+import Robotito from "../RobotError/Robotito";
 
 function Busqueda() {
   const location = useLocation();
@@ -13,16 +14,20 @@ function Busqueda() {
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [movieGenres, setMovieGenres] = useState({});
+  const [tvGenres, setTvGenres] = useState({});
 
-  // Definir las opciones de la animación Lottie
   const defaultOptions = {
     loop: true,
     autoplay: true, 
-    animationData: robotError, // La animación JSON de tu robotito
+    animationData: robotError,
     rendererSettings: {
       preserveAspectRatio: "xMidYMid slice"
     }
   };
+
+  const { getGenres: getMovieGenres } = useFetchItems("movie", 1);
+  const { getGenres: getTvGenres } = useFetchItems("tv", 1);
 
   useEffect(() => {
     const fetchResults = async () => {
@@ -64,6 +69,24 @@ function Busqueda() {
     fetchResults();
   }, [query]);
 
+  useEffect(() => {
+    if (results.length > 0) {
+      const movieGenresMap = {};
+      const tvGenresMap = {};
+
+      results.forEach((result) => {
+        if (result.media_type === "movie") {
+          movieGenresMap[result.id] = getMovieGenres(result.genre_ids, "movie").join(", ");
+        } else if (result.media_type === "tv") {
+          tvGenresMap[result.id] = getTvGenres(result.genre_ids, "tv").join(", ");
+        }
+      });
+
+      setMovieGenres(movieGenresMap);
+      setTvGenres(tvGenresMap);
+    }
+  }, [results, getMovieGenres, getTvGenres]);
+
   if (loading) return (
     <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
       <PacmanLoader color="#FFD700" size={50} />
@@ -71,26 +94,11 @@ function Busqueda() {
   );
 
   if (error) {
-    return (
-      <Container className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
-        <div className="text-center">
-          <Lottie options={defaultOptions} height={200} width={200} />
-          <h3 style={{ color: "#FF0000" }}>¡Ups! Algo salió mal. :(</h3>
-          <p>{error}</p>
-        </div>
-      </Container>
-    );
+    return <Robotito errorMessage={error} />
   }
 
   if (results.length === 0) {
-    return (
-      <Container className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
-        <div className="text-center">
-          <Lottie options={defaultOptions} height={200} width={200} />
-          <h3 style={{ color: "#FF0000" }}>¡Ups! No se hallaron coincidencias</h3>
-        </div>
-      </Container>
-    );
+    return <Robotito errorMessage={<h3 style={{ color: "#1c1c1c" }}>No se hallaron coincidencias</h3>} />
   }
 
   return (
@@ -99,17 +107,24 @@ function Busqueda() {
 
       <Container>
         <Row>
-          {results.map((result) => (
-            <Col md={3} key={result.id}>
-              <MovieCard
-                title={result.title || result.name}
-                description={result.overview}
-                imageUrl={`https://image.tmdb.org/t/p/w500${result.poster_path}`}
-                type={result.media_type === "tv" ? "Serie" : "Película"}
-                link={result.media_type === "tv" ? `/series-details/${result.id}` : `/movie-details/${result.id}`}
-              />
-            </Col>
-          ))}
+          {results.map((result) => {
+            const genres = result.media_type === "movie" 
+              ? movieGenres[result.id] 
+              : tvGenres[result.id];
+
+            return (
+              <Col md={3} key={result.id}>
+                <MovieCard
+                  title={result.title || result.name}
+                  description={result.overview}
+                  imageUrl={`https://image.tmdb.org/t/p/w500${result.poster_path}`}
+                  type={result.media_type === "tv" ? "Serie" : "Película"}
+                  genres={genres}
+                  link={result.media_type === "tv" ? `/series-details/${result.id}` : `/movie-details/${result.id}`}
+                />
+              </Col>
+            );
+          })}
         </Row>
       </Container>
     </div>

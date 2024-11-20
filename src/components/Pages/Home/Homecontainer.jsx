@@ -1,30 +1,28 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Modal, Button } from "react-bootstrap"; // Modal y Botón de React-Bootstrap
-import MovieCarousel from "../../layout/carousel/MoviesCarousel"; // Carrusel de películas
-import SeriesCarousel from "../../layout/carousel/seriescarousel"; // Carrusel de series
-import useFetchItems from "../../../hooks/useFetchMovies"; // Hook para obtener datos de la API
+import { Container, Row, Col, Modal, Button } from "react-bootstrap"; 
+import MovieCarousel from "../../layout/carousel/MoviesCarousel"; 
+import SeriesCarousel from "../../layout/carousel/seriescarousel"; 
+import useFetchItems from "../../../hooks/useFetchMovies"; 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./homecontainer.css";
 import { PacmanLoader } from "react-spinners";
+import Robotito from "../../layout/RobotError/Robotito";
 
 function Home() {
   const [movieGenres, setMovieGenres] = useState({});
-  const [seriesGenres, setSeriesGenres] = useState({});
-  const [showDisclaimer, setShowDisclaimer] = useState(true); // Estado para mostrar el disclaimer
+  const [seriesGenres, setSeriesGenres] = useState({}); 
+  const [showDisclaimer, setShowDisclaimer] = useState(true);
 
-  // Fetch de películas populares
-  const { items: movies, loading: loadingMovies, error: errorMovies, getGenres: getMovieGenres } = useFetchItems("movie", "popular");
+  const { items: movies, loading: loadingMovies, error: errorMovies, getGenres: getMovieGenres } = useFetchItems("movie", 1);
+  const { items: series, loading: loadingSeries, error: errorSeries, getGenres: getSeriesGenres } = useFetchItems("tv", 1);
 
-  // Fetch de series más valoradas
-  const { items: series, loading: loadingSeries, error: errorSeries, getGenres: getSeriesGenres } = useFetchItems("tv", "top_rated");
-
-  // Establecer los géneros de películas y series cuando los datos cambian
   useEffect(() => {
     if (movies.length > 0) {
       const movieGenresMap = {};
       movies.forEach((movie) => {
-        movieGenresMap[movie.id] = getMovieGenres(movie.genre_ids).join(", ");
+        const genres = getMovieGenres(movie.genre_ids, "movie").join(", ");
+        movieGenresMap[movie.id] = genres;
       });
       setMovieGenres(movieGenresMap);
     }
@@ -34,21 +32,20 @@ function Home() {
     if (series.length > 0) {
       const seriesGenresMap = {};
       series.forEach((serie) => {
-        seriesGenresMap[serie.id] = getSeriesGenres(serie.genre_ids).join(", ");
+        const genres = getSeriesGenres(serie.genre_ids, "tv").join(", ");
+        seriesGenresMap[serie.id] = genres;
       });
       setSeriesGenres(seriesGenresMap);
     }
   }, [series, getSeriesGenres]);
 
-  // Chequear si el disclaimer ya fue aceptado
   useEffect(() => {
     const hasAcceptedDisclaimer = localStorage.getItem("hasAcceptedDisclaimer");
     if (hasAcceptedDisclaimer) {
-      setShowDisclaimer(false); // Si ya aceptó, no mostramos el modal
+      setShowDisclaimer(false);
     }
   }, []);
 
-  // Comprobación de carga y error
   if (errorMovies || errorSeries) return <div>Error: {errorMovies || errorSeries}</div>;
   if (loadingMovies || loadingSeries) {
     return (
@@ -58,10 +55,9 @@ function Home() {
     );
   }
 
-  // Función para cerrar el disclaimer y guardar la preferencia
   const handleCloseDisclaimer = () => {
     setShowDisclaimer(false);
-    localStorage.setItem("hasAcceptedDisclaimer", "true"); // Guardar que ya aceptaron el disclaimer
+    localStorage.setItem("hasAcceptedDisclaimer", "true");
   };
 
   return (
