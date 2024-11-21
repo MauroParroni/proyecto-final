@@ -5,6 +5,7 @@ import { PacmanLoader } from "react-spinners";
 import './todasStyles.css';
 import useFetchItems from "../../../hooks/useFetchMovies";
 import Robotito from "../../layout/RobotError/Robotito";
+import ScrollToTop from "../../layout/Scroll/scrolltoTop";
 
 function Peliculas() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -38,6 +39,7 @@ function Peliculas() {
 
   return (
     <Container>
+      <ScrollToTop /> 
       <h1 className="page-title">Películas</h1>
       <Row>
         {movies.map((movie) => (

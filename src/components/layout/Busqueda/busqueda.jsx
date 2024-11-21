@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Pagination } from "react-bootstrap";
 import MovieCard from "../../layout/cards/moviecard";
 import { PacmanLoader } from "react-spinners";
 import * as robotError from "../../../assets/robot-error.json";
 import useFetchItems from "../../../hooks/useFetchMovies";
 import Robotito from "../RobotError/Robotito";
+import ScrollToTop from "../../layout/Scroll/scrolltoTop";
 
 function Busqueda() {
   const location = useLocation();
@@ -16,18 +17,24 @@ function Busqueda() {
   const [error, setError] = useState(null);
   const [movieGenres, setMovieGenres] = useState({});
   const [tvGenres, setTvGenres] = useState({});
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   const defaultOptions = {
     loop: true,
-    autoplay: true, 
+    autoplay: true,
     animationData: robotError,
     rendererSettings: {
-      preserveAspectRatio: "xMidYMid slice"
-    }
+      preserveAspectRatio: "xMidYMid slice",
+    },
   };
 
   const { getGenres: getMovieGenres } = useFetchItems("movie", 1);
   const { getGenres: getTvGenres } = useFetchItems("tv", 1);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [query]);
 
   useEffect(() => {
     const fetchResults = async () => {
@@ -41,10 +48,10 @@ function Busqueda() {
 
         const [movieResponse, tvResponse] = await Promise.all([
           axios.get(`https://api.themoviedb.org/3/search/movie`, {
-            params: { api_key: apiKey, language: "es-ES", query },
+            params: { api_key: apiKey, language: "es-ES", query, page: currentPage },
           }),
           axios.get(`https://api.themoviedb.org/3/search/tv`, {
-            params: { api_key: apiKey, language: "es-ES", query },
+            params: { api_key: apiKey, language: "es-ES", query, page: currentPage },
           }),
         ]);
 
@@ -59,6 +66,7 @@ function Busqueda() {
         }));
 
         setResults([...movies, ...tvShows]);
+        setTotalPages(Math.max(movieResponse.data.total_pages, tvResponse.data.total_pages));
       } catch (error) {
         setError("Error al obtener los resultados de búsqueda.");
       } finally {
@@ -67,7 +75,7 @@ function Busqueda() {
     };
 
     fetchResults();
-  }, [query]);
+  }, [query, currentPage]);
 
   useEffect(() => {
     if (results.length > 0) {
@@ -87,30 +95,44 @@ function Busqueda() {
     }
   }, [results, getMovieGenres, getTvGenres]);
 
-  if (loading) return (
-    <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
-      <PacmanLoader color="#FFD700" size={50} />
-    </div>
-  );
+  const handlePageChange = (page) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+    }
+  };
+
+  if (loading)
+    return (
+      <div className="d-flex justify-content-center align-items-center" style={{ height: "100vh" }}>
+        <PacmanLoader color="#FFD700" size={50} />
+      </div>
+    );
 
   if (error) {
-    return <Robotito errorMessage={error} />
+    return <Robotito errorMessage={error} />;
   }
 
   if (results.length === 0) {
-    return <Robotito errorMessage={<h3 style={{ color: "#1c1c1c" }}>No se hallaron coincidencias</h3>} />
+    return <Robotito errorMessage={<h3 style={{ color: "#1c1c1c" }}>No se hallaron coincidencias</h3>} />;
   }
+
+  const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+  const pageNumbersToShow = pages.filter((page) => {
+    const start = Math.max(currentPage - 2, 1);
+    const end = Math.min(currentPage + 2, totalPages);
+    return page >= start && page <= end;
+  });
 
   return (
     <div>
-      <h2 className="text-center">Resultados para: "{query}"</h2>
+      <ScrollToTop />
+      <h2 className="text-center page-title">Resultados para: "{query}"</h2>
 
       <Container>
         <Row>
           {results.map((result) => {
-            const genres = result.media_type === "movie" 
-              ? movieGenres[result.id] 
-              : tvGenres[result.id];
+            const genres =
+              result.media_type === "movie" ? movieGenres[result.id] : tvGenres[result.id];
 
             return (
               <Col md={3} key={result.id}>
@@ -120,13 +142,33 @@ function Busqueda() {
                   imageUrl={`https://image.tmdb.org/t/p/w500${result.poster_path}`}
                   type={result.media_type === "tv" ? "Serie" : "Película"}
                   genres={genres}
-                  link={result.media_type === "tv" ? `/series-details/${result.id}` : `/movie-details/${result.id}`}
+                  link={
+                    result.media_type === "tv"
+                      ? `/series-details/${result.id}`
+                      : `/movie-details/${result.id}`
+                  }
                 />
               </Col>
             );
           })}
         </Row>
       </Container>
+
+      <Pagination className="justify-content-center">
+        <Pagination.First onClick={() => handlePageChange(1)} />
+        <Pagination.Prev onClick={() => handlePageChange(currentPage - 1)} />
+        {pageNumbersToShow.map((page) => (
+          <Pagination.Item
+            key={page}
+            active={page === currentPage}
+            onClick={() => handlePageChange(page)}
+          >
+            {page}
+          </Pagination.Item>
+        ))}
+        <Pagination.Next onClick={() => handlePageChange(currentPage + 1)} />
+        <Pagination.Last onClick={() => handlePageChange(totalPages)} />
+      </Pagination>
     </div>
   );
 }

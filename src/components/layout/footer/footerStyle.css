@@ -6,6 +6,7 @@ footer {
 
 footer h5 {
   margin-bottom: 1rem;
+  font-weight: bold;
 }
 
 footer p {
@@ -24,4 +25,22 @@ footer .nav-link:hover {
 
 footer hr {
   border-top: 1px solid #495057;
+}
+
+.nav-item {
+  color: #ffffff;
+  text-decoration: none;
+  transition: color 0.1s;
+  padding: 0 0 7px 0;
+}
+
+.nav-item a {
+  color: #ffffff;
+  font-style: italic;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.nav-item a:hover {
+  color: #adb5bd;
 }

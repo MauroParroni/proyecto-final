@@ -55,6 +55,7 @@ function Home() {
     );
   }
 
+  if (errorMovies || errorSeries) return <Robotito errorMessage={errorMovies || errorSeries} />;
   const handleCloseDisclaimer = () => {
     setShowDisclaimer(false);
     localStorage.setItem("hasAcceptedDisclaimer", "true");

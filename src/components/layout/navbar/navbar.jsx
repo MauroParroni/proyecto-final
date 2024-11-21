@@ -9,6 +9,8 @@ import Button from "react-bootstrap/Button";
 import Dropdown from "react-bootstrap/Dropdown";
 import logo from "../../../Images/VePelis-removebg-preview.png";
 import "./navbarStyle.css";
+import { BsSearch } from "react-icons/bs";
+import { FaSearch } from "react-icons/fa";
 
 function BarraNav() {
   const [query, setQuery] = useState("");
@@ -86,12 +88,17 @@ function BarraNav() {
   const handleSearchClick = () => {
     if (query.trim()) {
       navigate(`/busqueda?query=${query}`);
+      setQuery("");
     }
+    
   };
 
   const handleResultClick = () => {
     setQuery("");
     setShowDropdown(false);
+    if (isNavbarOpen) {
+      setIsNavbarOpen(false);
+    }
   };
 
   const handleLinkClick = () => {
@@ -108,11 +115,15 @@ function BarraNav() {
   const handleKeyPress = (e) => {
     if (e.key === "Enter" && query.trim()) {
       navigate(`/busqueda?query=${query}`);
+      setQuery("");
     }
   };
 
   const handleGenreSelect = (genreId, type) => {
     navigate(`/${type}/genero/${genreId}`);
+    if (isNavbarOpen) {
+      setIsNavbarOpen(false);
+    }
   };
 
   return (
@@ -124,7 +135,7 @@ function BarraNav() {
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="me-auto">
           <Link to="/" className="nav-link active" onClick={handleLinkClick}>Inicio</Link>
-          <Link to="/peliculas" className="nav-link active" onClick={handleLinkClick}>Peliculas</Link>
+          <Link to="/peliculas" className="nav-link active" onClick={handleLinkClick}>Películas</Link>
           <Link to="/series" className="nav-link active" onClick={handleLinkClick}>Series</Link>
         </Nav>
 
@@ -132,15 +143,15 @@ function BarraNav() {
         <Form className="d-flex ms-auto position-relative" onSubmit={(e) => e.preventDefault()}>
           <FormControl
             type="search"
-            placeholder="Buscar"
-            className="me-2"
+            placeholder="Buscar..."
+            className="me-0 rounded-0 border-white border-end-0"
             aria-label="Search"
             value={query}
             onChange={handleInputChange}
             onKeyDown={handleKeyPress}
           />
-          <Button variant="outline-light" className="me-2" onClick={handleSearchClick}>
-            Buscar
+          <Button variant="outline-light" className="me-2 btn rounded-start-0 rounded-end-5 d-flex align-items-center justify-content-center" onClick={handleSearchClick}>
+            <FaSearch size={20} />
           </Button>
           {showDropdown && searchResults.length > 0 && (
             <div className="search-dropdown">
@@ -165,7 +176,7 @@ function BarraNav() {
 
         {/* Dropdown para géneros */}
         <Dropdown align="end">
-          <Dropdown.Toggle variant="success" id="dropdown-basic">
+          <Dropdown.Toggle variant="warning" id="dropdown-basic">
             Géneros
           </Dropdown.Toggle>
 
