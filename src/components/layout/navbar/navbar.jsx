@@ -90,11 +90,15 @@ function BarraNav() {
       navigate(`/busqueda?query=${query}`);
       setQuery("");
     }
+    
   };
 
   const handleResultClick = () => {
     setQuery("");
     setShowDropdown(false);
+    if (isNavbarOpen) {
+      setIsNavbarOpen(false);
+    }
   };
 
   const handleLinkClick = () => {
@@ -117,6 +121,9 @@ function BarraNav() {
 
   const handleGenreSelect = (genreId, type) => {
     navigate(`/${type}/genero/${genreId}`);
+    if (isNavbarOpen) {
+      setIsNavbarOpen(false);
+    }
   };
 
   return (
