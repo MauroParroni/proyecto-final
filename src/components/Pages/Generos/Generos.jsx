@@ -5,6 +5,7 @@ import MovieCard from '../../layout/cards/moviecard';
 import { PacmanLoader } from "react-spinners";
 import useFetchItems from '../../../hooks/useFetchMovies';
 import Robotito from '../../layout/RobotError/Robotito';
+import ScrollToTop from '../../layout/Scroll/scrolltoTop';
 
 const Generos = ({ tipo }) => {
   const { id } = useParams();
@@ -55,6 +56,7 @@ const Generos = ({ tipo }) => {
 
   return (
     <Container>
+      <ScrollToTop />
       {filteredItems.length > 0 && (
         <h2 className="page-title">
           {tituloTipo}: {getGenres([parseInt(id)], tipo === "peliculas" ? "movie" : "tv")[0]}

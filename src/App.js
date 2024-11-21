@@ -5,6 +5,7 @@ import SeriesDetails from './components/Pages/SerieDetails/Seriedetails';
 import Login from "./components/Pages/login-register/LoginContainer";
 import Register from "./components/Pages/login-register/RegisterContainer";
 import Navbar from "./components/layout/navbar/navbar";
+import Footer from "./components/layout/footer/footer";
 import Busqueda from "./components/layout/Busqueda/busqueda";
 import Peliculas from "./components/Pages/Todas/PeliculasTodas";
 import Series from "./components/Pages/Todas/SeriesTodas";
@@ -33,6 +34,7 @@ function App() {
           <Route path="/peliculas/genero/:id" element={<Generos tipo="peliculas" />} />
           <Route path="/series/genero/:id" element={<Generos tipo="series" />} />
         </Routes>
+        <Footer />
       </div>
     </Router>
   );

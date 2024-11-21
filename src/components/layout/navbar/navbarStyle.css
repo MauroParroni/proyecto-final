@@ -2,6 +2,20 @@ nav.navbar-transparent {
   background-color: #212529 !important;
 }
 
+nav .nav-link {
+  color: #ffffff !important;
+  transition: color 0.3s, scale 0.3s;
+}
+
+nav .nav-link:hover {
+  color: #FFD700 !important;
+  scale: 1.2;
+}
+
+navbar .form-control:focus {
+  box-shadow: none;
+}
+
 .dropdown {
   margin-left: .5rem;
 }

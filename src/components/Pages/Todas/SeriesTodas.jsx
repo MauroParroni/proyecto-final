@@ -7,6 +7,7 @@ import './todasStyles.css';
 import Lottie from "react-lottie";
 import * as robotError from "../../../assets/robot-error.json";
 import Robotito from "../../layout/RobotError/Robotito";
+import ScrollToTop from "../../layout/Scroll/scrolltoTop";
 
 function Series() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -35,6 +36,7 @@ function Series() {
 
   return (
     <Container>
+      <ScrollToTop />
       <h1 className="page-title">Series</h1>
       <Row>
         {series.map((serie) => (
