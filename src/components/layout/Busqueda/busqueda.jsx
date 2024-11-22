@@ -39,13 +39,14 @@ function Busqueda() {
   useEffect(() => {
     const fetchResults = async () => {
       if (!query) return;
-
+  
       setLoading(true);
+      setResults([]);
       setError(null);
-
+      
       try {
         const apiKey = "4e44d9029b1270a757cddc766a1bcb63";
-
+  
         const [movieResponse, tvResponse] = await Promise.all([
           axios.get(`https://api.themoviedb.org/3/search/movie`, {
             params: { api_key: apiKey, language: "es-ES", query, page: currentPage },
@@ -54,46 +55,62 @@ function Busqueda() {
             params: { api_key: apiKey, language: "es-ES", query, page: currentPage },
           }),
         ]);
-
+  
         const movies = movieResponse.data.results.map((item) => ({
           ...item,
           media_type: "movie",
         }));
-
+  
         const tvShows = tvResponse.data.results.map((item) => ({
           ...item,
           media_type: "tv",
         }));
-
-        setResults([...movies, ...tvShows]);
-        setTotalPages(Math.max(movieResponse.data.total_pages, tvResponse.data.total_pages));
+  
+        const combinedResults = [...movies, ...tvShows];
+  
+        if (combinedResults.length === 0) {
+          setResults([]);
+          setError("No se hallaron coincidencias.");
+        } else {
+          setResults(combinedResults);
+          setError(null);
+          setTotalPages(
+            Math.max(movieResponse.data.total_pages, tvResponse.data.total_pages)
+          );
+        }
       } catch (error) {
         setError("Error al obtener los resultados de búsqueda.");
       } finally {
         setLoading(false);
       }
     };
-
+  
     fetchResults();
-  }, [query, currentPage]);
+  }, [query, currentPage]);  
 
   useEffect(() => {
     if (results.length > 0) {
       const movieGenresMap = {};
       const tvGenresMap = {};
-
+  
       results.forEach((result) => {
-        if (result.media_type === "movie") {
+        if (result.media_type === "movie" && Array.isArray(result.genre_ids)) {
           movieGenresMap[result.id] = getMovieGenres(result.genre_ids, "movie").join(", ");
-        } else if (result.media_type === "tv") {
+        } else if (result.media_type === "tv" && Array.isArray(result.genre_ids)) {
           tvGenresMap[result.id] = getTvGenres(result.genre_ids, "tv").join(", ");
         }
       });
-
+  
       setMovieGenres(movieGenresMap);
       setTvGenres(tvGenresMap);
     }
   }, [results, getMovieGenres, getTvGenres]);
+
+  useEffect(() => {
+    if (results.length > 0) {
+      setError(null);
+    }
+  }, [results]);
 
   const handlePageChange = (page) => {
     if (page >= 1 && page <= totalPages) {
@@ -101,18 +118,19 @@ function Busqueda() {
     }
   };
 
-  if (loading)
+  if (loading) {
     return (
       <div className="d-flex justify-content-center align-items-center" style={{ height: "100vh" }}>
         <PacmanLoader color="#FFD700" size={50} />
       </div>
     );
-
-  if (error) {
+  }
+  
+  if (!loading && error) {
     return <Robotito errorMessage={error} />;
   }
-
-  if (results.length === 0) {
+  
+  if (!loading && error && results.length === 0) {
     return <Robotito errorMessage={<h3 style={{ color: "#1c1c1c" }}>No se hallaron coincidencias</h3>} />;
   }
 

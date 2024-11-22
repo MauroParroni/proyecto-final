@@ -12,7 +12,7 @@ nav .nav-link:hover {
   scale: 1.2;
 }
 
-navbar .form-control:focus {
+nav .form-control:focus {
   box-shadow: none;
 }
 
@@ -82,7 +82,6 @@ navbar .form-control:focus {
 }
 
 .dropdown-column {
-  width: 100%;
   display: flex;
   flex-direction: column;
   margin: 10px 5px 0 5px;

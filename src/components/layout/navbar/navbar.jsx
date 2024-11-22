@@ -9,7 +9,6 @@ import Button from "react-bootstrap/Button";
 import Dropdown from "react-bootstrap/Dropdown";
 import logo from "../../../Images/VePelis-removebg-preview.png";
 import "./navbarStyle.css";
-import { BsSearch } from "react-icons/bs";
 import { FaSearch } from "react-icons/fa";
 
 function BarraNav() {
@@ -89,6 +88,7 @@ function BarraNav() {
     if (query.trim()) {
       navigate(`/busqueda?query=${query}`);
       setQuery("");
+      setIsNavbarOpen(false);
     }
     
   };
@@ -116,6 +116,8 @@ function BarraNav() {
     if (e.key === "Enter" && query.trim()) {
       navigate(`/busqueda?query=${query}`);
       setQuery("");
+      setShowDropdown(false);
+      setIsNavbarOpen(false);
     }
   };
 
