@@ -61,10 +61,38 @@ function Register() {
     resolver: zodResolver(schema),
   });
 
-  const onSubmit = (data) => {
-    console.log(data);
-    reset();
+  const onSubmit = async (data) => {
+    try {
+      const response = await fetch('http://localhost:3000/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: data.email,
+          password: data.password,
+          name: data.name,
+          username: data.username,
+          dni: data.dni,
+          age: data.age,
+          country: data.country,
+        }),
+      });
+  
+      const result = await response.json();
+      if (response.ok) {
+        alert(result.message); // Mensaje de éxito
+      } else {
+        alert(result.message); // Mensaje de error del servidor
+      }
+    } catch (error) {
+      console.error('Acá hay un problema: ', error);
+      alert('Error al conectar con el servidor');
+    }
+  
+    reset(); // Limpia el formulario tras el envío
   };
+  
 
   return (
     <div className="login">
@@ -80,7 +108,7 @@ function Register() {
             </div>
           </Col>
           <Col sm="6" className="col-form col-form-register">
-            <h1 className="titulo-login">BEPPOPELIS</h1>
+            <h1 className="titulo-login">VePelis 2.0</h1>
             <div className="contenedor-form contenedor-form-register">
               <h2>¡Bienvenido!</h2>
               <h4>Ingresa tus datos</h4>
@@ -147,7 +175,7 @@ function Register() {
                 <p className="texto-registro">
                   ¿Ya tienes cuenta?{" "}
                   <Link to="/login" className="link-registro">
-                    Login
+                    Iniciar sesión
                   </Link>
                 </p>
               </Form>

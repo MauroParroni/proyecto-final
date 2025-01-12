@@ -56,7 +56,7 @@ function Login() {
             </div>
           </Col>
           <Col sm="6" className="col-form">
-            <h1 className="titulo-login">BEPPOPELIS</h1>
+            <h1 className="titulo-login">VePelis</h1>
             <div className="contenedor-form">
               <h2>¡Bienvenido de vuelta!</h2>
               <h4>Ingresa tus datos</h4>
@@ -78,7 +78,7 @@ function Login() {
                 />
 
                 <Button className="boton-login" variant="primary" type="submit">
-                  Login
+                  Ingresar
                 </Button>
                 <p className="texto-registro">
                   ¿No tienes cuenta?{" "}
