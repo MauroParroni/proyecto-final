@@ -140,41 +140,47 @@ function BarraNav() {
           <Link to="/peliculas" className="nav-link active" onClick={handleLinkClick}>Películas</Link>
           <Link to="/series" className="nav-link active" onClick={handleLinkClick}>Series</Link>
         </Nav>
+        {/* Contenedor alineado a la derecha */}
+    <div className="d-flex align-items-center ms-auto">
+      <Link to="/register" className="nav-link active" onClick={handleLinkClick}>Registroㅤ</Link>
+      {/* Botón de inicio de sesión con espacio vacio*/}
+      <Link to="/login" className="btn btn-outline-warning me-3">Iniciar Sesión</Link>
 
-        {/* Formulario de búsqueda */}
-        <Form className="d-flex ms-auto position-relative" onSubmit={(e) => e.preventDefault()}>
-          <FormControl
-            type="search"
-            placeholder="Buscar..."
-            className="me-0 rounded-0 border-white border-end-0"
-            aria-label="Search"
-            value={query}
-            onChange={handleInputChange}
-            onKeyDown={handleKeyPress}
-          />
-          <Button variant="outline-light" className="me-2 btn rounded-start-0 rounded-end-5 d-flex align-items-center justify-content-center" onClick={handleSearchClick}>
-            <FaSearch size={20} />
-          </Button>
-          {showDropdown && searchResults.length > 0 && (
-            <div className="search-dropdown">
-              {searchResults.slice(0, 10).map((result) => (
-                <Link
-                  key={result.id}
-                  to={result.media_type === "tv" ? `/series-details/${result.id}` : `/movie-details/${result.id}`}
-                  className="search-result-item"
-                  onClick={handleResultClick}
-                >
-                  <img
-                    src={`https://image.tmdb.org/t/p/w92${result.poster_path}`}
-                    alt={result.title || result.name}
-                    className="result-poster"
-                  />
-                  <span className="result-title">{result.title || result.name}</span>
-                </Link>
-              ))}
-            </div>
-          )}
-        </Form>
+      {/* Formulario de búsqueda */}
+      <Form className="d-flex position-relative" onSubmit={(e) => e.preventDefault()}>
+        <FormControl
+          type="search"
+          placeholder="Buscar..."
+          className="me-0 rounded-0 border-white border-end-0"
+          aria-label="Search"
+          value={query}
+          onChange={handleInputChange}
+          onKeyDown={handleKeyPress}
+        />
+        <Button variant="outline-light" className="me-2 btn rounded-start-0 rounded-end-5 d-flex align-items-center justify-content-center" onClick={handleSearchClick}>
+          <FaSearch size={20} />
+        </Button>
+        {showDropdown && searchResults.length > 0 && (
+          <div className="search-dropdown">
+            {searchResults.slice(0, 10).map((result) => (
+              <Link
+                key={result.id}
+                to={result.media_type === "tv" ? `/series-details/${result.id}` : `/movie-details/${result.id}`}
+                className="search-result-item"
+                onClick={handleResultClick}
+              >
+                <img
+                  src={`https://image.tmdb.org/t/p/w92${result.poster_path}`}
+                  alt={result.title || result.name}
+                  className="result-poster"
+                />
+                <span className="result-title">{result.title || result.name}</span>
+              </Link>
+            ))}
+          </div>
+        )}
+      </Form>
+    </div>
 
         {/* Dropdown para géneros */}
         <Dropdown align="end">

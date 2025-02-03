@@ -1,0 +1,23 @@
+/* admin.css */
+.data-grid-header {
+    background-color: #1976d2 !important;
+    color: rgb(196, 39, 39) !important;
+    font-size: 16px !important;
+}
+
+.data-grid-cell {
+    font-size: 14px !important;
+    background-color: azure;
+}
+
+.data-grid-cell:hover{
+    background-color: #f0f0f0;
+}
+
+.data-grid-delete-button {
+    background-color: #d32f2f;
+}
+
+.data-grid-delete-button:hover {
+    background-color: #8fc628;
+}

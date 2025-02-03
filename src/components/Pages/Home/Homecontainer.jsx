@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Modal, Button } from "react-bootstrap"; 
+import { Modal, Button } from "react-bootstrap"; 
 import MovieCarousel from "../../layout/carousel/MoviesCarousel"; 
 import SeriesCarousel from "../../layout/carousel/seriescarousel"; 
 import useFetchItems from "../../../hooks/useFetchMovies"; 
@@ -40,10 +40,12 @@ function Home() {
   }, [series, getSeriesGenres]);
 
   useEffect(() => {
-    const hasAcceptedDisclaimer = localStorage.getItem("hasAcceptedDisclaimer");
-    if (hasAcceptedDisclaimer) {
+    const timer = setTimeout(() => {
       setShowDisclaimer(false);
-    }
+      localStorage.setItem("hasAcceptedDisclaimer", "true");
+    }, 10000); // Ocultar el modal después de 3 segundos, por ejemplo
+  
+    return () => clearTimeout(timer); // Limpiar el temporizador cuando el componente se desmonte
   }, []);
 
   if (errorMovies || errorSeries) return <div>Error: {errorMovies || errorSeries}</div>;
