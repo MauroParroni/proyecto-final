@@ -12,7 +12,8 @@ import Series from "./components/Pages/Todas/SeriesTodas";
 import ScrollToTop from "./components/layout/Scroll/scrolltoTop";
 import Generos from "./components/Pages/Generos/Generos";
 import NotFound from "./components/Pages/NotFound/NotFound";
-
+import ProfileContainer from "./components/Pages/Profile/ProfileContainer";
+import Admin from "./components/Pages/admin/admin";
 
 function App() {
 
@@ -33,6 +34,8 @@ function App() {
           <Route path="/busqueda" element={<Busqueda />} />
           <Route path="/peliculas/genero/:id" element={<Generos tipo="peliculas" />} />
           <Route path="/series/genero/:id" element={<Generos tipo="series" />} />
+          <Route path="/profile" element={<ProfileContainer />} />
+          <Route path="/admin" element={<Admin />} />
         </Routes>
         <Footer />
       </div>

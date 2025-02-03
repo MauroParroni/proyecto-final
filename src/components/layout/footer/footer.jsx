@@ -41,6 +41,9 @@ function Footer() {
               <Nav.Item className="footer-link">
                 <Link to="/series">Series</Link>
               </Nav.Item>
+              <Nav.Item className="footer-link">
+                <Link to="/admin">¿Eres administrador?</Link>
+              </Nav.Item>
             </Nav>
           </Col>
           <Col
@@ -49,7 +52,7 @@ function Footer() {
           >
             <div className="flex-column">
               <h5>Contáctanos</h5>
-              <p>E-mail: crotolamo@gmail.com</p>
+              <p>E-mail: prod@animals.com</p>
               <p>Tel: +54 9 3476069420</p>
             </div>
           </Col>
@@ -58,7 +61,7 @@ function Footer() {
         <Row>
           <Col className="text-center">
             <p className="mb-2">
-              &copy; 2024 VePelis. Todos los derechos reservados.
+              &copy; 2025 VePelis. Todos los derechos reservados.
             </p>
           </Col>
         </Row>

@@ -1,7 +1,9 @@
+import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import Modal from "react-bootstrap/Modal";
 import "./LoginRegisterStyle.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Input from "./Input";
 import posterLogin from "../../../Images/poster-login.jpg";
 import Container from "react-bootstrap/Container";
@@ -18,32 +20,75 @@ const schema = z.object({
     .email({ message: "Email inválido" }),
   password: z
     .string()
-    .min(8, { message: "La contraseña debe tener al menos 8 caracteres" })
-    .regex(/[A-Z]/, {
-      message: "La contraseña debe tener al menos una letra mayúscula",
-    })
-    .regex(/[a-z]/, {
-      message: "La contraseña debe tener al menos una letra minúscula",
-    })
-    .regex(/\d/, { message: "La contraseña debe tener al menos un número" })
-    .regex(/[^A-Za-z0-9]/, {
-      message: "La contraseña debe tener al menos un carácter especial",
-    })
+    .min(8, { message: "La contraseña debe tener al menos 8 caracteres" }),
 });
 
 function Login() {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm({
     resolver: zodResolver(schema),
   });
 
-  const onSubmit = (data) => {
-    console.log(data);
-    reset();
+  const [modalShow, setModalShow] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
+  const [modalTitle, setModalTitle] = useState("");
+  const [modalVariant, setModalVariant] = useState("primary");
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
+  const [timeRemaining, setTimeRemaining] = useState(2);
+  const [isLoginSuccessful, setIsLoginSuccessful] = useState(false);
+
+  useEffect(() => {
+    let timer;
+    if (isLoginSuccessful && timeRemaining > 0) {
+      timer = setInterval(() => {
+        setTimeRemaining((prevTime) => prevTime - 1);
+      }, 1000);
+    } else if (isLoginSuccessful && timeRemaining === 0) {
+      setModalShow(false);
+      navigate("/profile");
+    }
+    return () => clearInterval(timer);
+  }, [timeRemaining, isLoginSuccessful, navigate]);
+
+  const onSubmit = async (data) => {
+    setIsLoggingIn(true);
+    setIsLoginSuccessful(false);
+
+    try {
+      const response = await fetch("http://localhost:5000/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+      if (response.ok) {
+        setModalTitle("Inicio de sesión exitoso");
+        setModalMessage("¡Bienvenido! Serás redirigido en breve.");
+        setModalVariant("success");
+        setIsLoginSuccessful(true);
+        setTimeRemaining(2);
+      } else {
+        setModalTitle("Error en el inicio de sesión");
+        setModalMessage(result.message || "Correo o contraseña incorrectos.");
+        setModalVariant("danger");
+        setIsLoginSuccessful(false);
+      }
+      setModalShow(true);
+    } catch (error) {
+      console.error("Error al conectar con el servidor:", error);
+      setModalTitle("Error del servidor");
+      setModalMessage("No se pudo conectar al servidor. Inténtalo más tarde.");
+      setModalVariant("warning");
+      setIsLoginSuccessful(false);
+      setModalShow(true);
+    } finally {
+      setIsLoggingIn(false);
+    }
   };
 
   return (
@@ -68,7 +113,6 @@ function Login() {
                   register={register}
                   errors={errors}
                 />
-
                 <Input
                   label="Contraseña"
                   type="password"
@@ -76,14 +120,18 @@ function Login() {
                   register={register}
                   errors={errors}
                 />
-
-                <Button className="boton-login" variant="primary" type="submit">
-                  Ingresar
+                <Button
+                  className="boton-login"
+                  variant="primary"
+                  type="submit"
+                  disabled={isLoggingIn}
+                >
+                  {isLoggingIn ? "Ingresando..." : "Ingresar"}
                 </Button>
                 <p className="texto-registro">
                   ¿No tienes cuenta?{" "}
                   <Link to="/register" className="link-registro">
-                    Registrate
+                    Regístrate
                   </Link>
                 </p>
               </Form>
@@ -91,6 +139,24 @@ function Login() {
           </Col>
         </Row>
       </Container>
+
+      <Modal show={modalShow} onHide={() => setModalShow(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title className={`text-${modalVariant}`}>{modalTitle}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>{modalMessage}</Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant={modalVariant}
+            onClick={() => setModalShow(false)}
+            disabled={isLoginSuccessful && timeRemaining > 0}
+          >
+            {isLoginSuccessful && timeRemaining > 0
+              ? `Redirigiendo al perfil (${timeRemaining}s)`
+              : "Cerrar"}
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }

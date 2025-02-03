@@ -1,7 +1,9 @@
+import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import Modal from "react-bootstrap/Modal";
 import "./LoginRegisterStyle.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import posterLogin from "../../../Images/poster-login.jpg";
 import Input from "./Input";
 import Container from "react-bootstrap/Container";
@@ -19,16 +21,10 @@ const schema = z.object({
   password: z
     .string()
     .min(8, { message: "La contraseña debe tener al menos 8 caracteres" })
-    .regex(/[A-Z]/, {
-      message: "La contraseña debe tener al menos una letra mayúscula",
-    })
-    .regex(/[a-z]/, {
-      message: "La contraseña debe tener al menos una letra minúscula",
-    })
+    .regex(/[A-Z]/, { message: "La contraseña debe tener al menos una letra mayúscula" })
+    .regex(/[a-z]/, { message: "La contraseña debe tener al menos una letra minúscula" })
     .regex(/\d/, { message: "La contraseña debe tener al menos un número" })
-    .regex(/[^A-Za-z0-9]/, {
-      message: "La contraseña debe tener al menos un carácter especial",
-    }),
+    .regex(/[^A-Za-z0-9]/, { message: "La contraseña debe tener al menos un carácter especial" }),
   name: z
     .string()
     .min(2, { message: "El nombre es requerido" })
@@ -37,17 +33,13 @@ const schema = z.object({
     .string()
     .min(2, { message: "El nombre de usuario es requerido" })
     .max(50, { message: "El nombre de usuario es demasiado extenso" }),
-  dni: z
-    .string()
-    .regex(/^\d{7,8}$/, { message: "El DNI debe contener solo dígitos" }),
+  dni: z.string().regex(/^\d{7,8}$/, { message: "El DNI debe contener solo dígitos" }),
   age: z
     .string()
     .min(1, { message: "La edad es requerida" })
     .transform((val) => parseInt(val, 10))
     .refine((val) => val >= 18, { message: "Debes tener al menos 18 años" })
-    .refine((val) => val <= 120, {
-      message: "La edad debe ser menor a 120 años",
-    }),
+    .refine((val) => val <= 120, { message: "La edad debe ser menor a 120 años" }),
   country: z.string().min(1, { message: "El país es requerido" }),
 });
 
@@ -55,44 +47,49 @@ function Register() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
     reset,
+    formState: { errors },
   } = useForm({
     resolver: zodResolver(schema),
   });
 
+  const [modalShow, setModalShow] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
+  const [isRegistered, setIsRegistered] = useState(false); // Nuevo estado
+  const navigate = useNavigate(); // Hook para redirigir
+
   const onSubmit = async (data) => {
     try {
-      const response = await fetch('http://localhost:3000/register', {
-        method: 'POST',
+      const response = await fetch("http://localhost:5000/register", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          email: data.email,
-          password: data.password,
-          name: data.name,
-          username: data.username,
-          dni: data.dni,
-          age: data.age,
-          country: data.country,
-        }),
+        body: JSON.stringify(data),
       });
-  
+
       const result = await response.json();
       if (response.ok) {
-        alert(result.message); // Mensaje de éxito
+        setModalMessage(result.message); // Mensaje de éxito
+        setIsRegistered(true); // Cambiar estado de registro exitoso
+        reset(); // Resetear los campos del formulario
       } else {
-        alert(result.message); // Mensaje de error del servidor
+        setModalMessage(result.message); // Mensaje de error del servidor
       }
     } catch (error) {
-      console.error('Acá hay un problema: ', error);
-      alert('Error al conectar con el servidor');
+      console.error("Error al realizar la solicitud:", error);
+      setModalMessage("Error al conectar con el servidor.");
+    } finally {
+      setModalShow(true); // Mostrar el modal con el mensaje
     }
-  
-    reset(); // Limpia el formulario tras el envío
   };
-  
+
+  const handleCloseModal = () => {
+    setModalShow(false);
+    if (isRegistered) {
+      navigate("/login"); // Redirigir al login si el registro fue exitoso
+    }
+  };
 
   return (
     <div className="login">
@@ -183,6 +180,19 @@ function Register() {
           </Col>
         </Row>
       </Container>
+
+      {/* Modal para mostrar mensajes */}
+      <Modal show={modalShow} onHide={handleCloseModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Información</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>{modalMessage}</Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" onClick={handleCloseModal}>
+            Cerrar
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }
